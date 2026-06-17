@@ -1,10 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
+
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -29,7 +32,7 @@ export default function LoginPage() {
       return
     }
 
-    router.push('/cards')
+    router.push(token ? `/join?token=${token}` : '/cards')
   }
 
   return (
@@ -78,7 +81,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-stone-500">
           Pas de compte ?{' '}
-          <a href="/register" className="font-medium text-stone-900 underline">
+          <a href={token ? `/register?token=${token}` : '/register'} className="font-medium text-stone-900 underline">
             S'inscrire
           </a>
         </p>

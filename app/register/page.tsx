@@ -1,10 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function RegisterPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
+
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [birthDate, setBirthDate] = useState('')
@@ -31,7 +34,7 @@ export default function RegisterPage() {
       return
     }
 
-    router.push('/cards')
+    router.push(token ? `/join?token=${token}` : '/cards')
   }
 
   return (
@@ -106,7 +109,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-stone-500">
           Déjà un compte ?{' '}
-          <a href="/login" className="font-medium text-stone-900 underline">
+          <a href={token ? `/login?token=${token}` : '/login'} className="font-medium text-stone-900 underline">
             Se connecter
           </a>
         </p>

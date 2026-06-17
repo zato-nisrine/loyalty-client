@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import BottomNav from '@/components/BottomNav'
 import QrScannerComponent from '@/components/QrScanner'
@@ -19,11 +19,34 @@ function extractToken(scannedValue: string): string {
 
 export default function JoinPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const [authChecked, setAuthChecked] = useState(false)
+  const [authenticated, setAuthenticated] = useState(false)
   const [mode, setMode] = useState<'scan' | 'manual'>('scan')
   const [qrCodeToken, setQrCodeToken] = useState('')
+  const [pendingToken, setPendingToken] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [scanLocked, setScanLocked] = useState(false)
+
+  useEffect(() => {
+    const urlToken = searchParams.get('token')
+    if (urlToken) setPendingToken(urlToken)
+
+    fetch('/api/auth/me')
+      .then((res) => res.json())
+      .then((data) => {
+        setAuthenticated(data.authenticated)
+        setAuthChecked(true)
+      })
+  }, [searchParams])
+
+  useEffect(() => {
+    if (authChecked && authenticated && pendingToken) {
+      joinWithToken(pendingToken)
+    }
+  }, [authChecked, authenticated, pendingToken])
 
   async function joinWithToken(token: string) {
     setError('')
@@ -52,13 +75,59 @@ export default function JoinPage() {
     if (scanLocked) return
     setScanLocked(true)
     const token = extractToken(scannedValue)
+    setPendingToken(token)
     setQrCodeToken(token)
-    joinWithToken(token)
+    if (authenticated) {
+      joinWithToken(token)
+    }
   }
 
   function handleManualSubmit(e: React.FormEvent) {
     e.preventDefault()
-    joinWithToken(qrCodeToken)
+    setPendingToken(qrCodeToken)
+    if (authenticated) {
+      joinWithToken(qrCodeToken)
+    }
+  }
+
+  if (!authChecked) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F2]">
+        <p className="text-sm text-stone-400">Chargement...</p>
+      </div>
+    )
+  }
+
+  if (!authenticated) {
+    const tokenSuffix = pendingToken ? `?token=${pendingToken}` : ''
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F2] px-5">
+        <div className="w-full max-w-sm space-y-5 text-center">
+          <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-stone-900">
+            Connectez-vous pour continuer
+          </h1>
+          <p className="text-sm text-stone-500">
+            {pendingToken
+              ? 'Connectez-vous ou créez un compte pour ajouter cette carte de fidélité.'
+              : 'Connectez-vous ou créez un compte pour rejoindre un restaurant.'}
+          </p>
+          <div className="space-y-3">
+            <Link
+              href={`/login${tokenSuffix}`}
+              className="block w-full rounded-full bg-stone-900 py-2.5 text-sm font-medium text-white"
+            >
+              Se connecter
+            </Link>
+            <Link
+              href={`/register${tokenSuffix}`}
+              className="block w-full rounded-full border border-stone-300 py-2.5 text-sm font-medium text-stone-700"
+            >
+              Créer un compte
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (

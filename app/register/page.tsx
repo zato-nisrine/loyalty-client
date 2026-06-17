@@ -7,6 +7,7 @@ export default function RegisterPage() {
   const router = useRouter()
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [birthDate, setBirthDate] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -19,7 +20,7 @@ export default function RegisterPage() {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone, password }),
+      body: JSON.stringify({ name, phone, birthDate, password }),
     })
 
     setLoading(false)
@@ -65,6 +66,19 @@ export default function RegisterPage() {
               placeholder="229XXXXXXXX"
               className="w-full rounded-lg border border-stone-300 px-3 py-2.5 text-sm text-stone-900"
             />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-sm text-stone-600">Date de naissance</label>
+            <input
+              type="date"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              required
+              max={new Date().toISOString().split('T')[0]}
+              className="w-full rounded-lg border border-stone-300 px-3 py-2.5 text-sm text-stone-900"
+            />
+            <p className="text-xs text-stone-400">Pour recevoir une surprise le jour de votre anniversaire 🎉</p>
           </div>
 
           <div className="space-y-1">

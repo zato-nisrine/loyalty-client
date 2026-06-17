@@ -3,6 +3,7 @@ import { redirect, notFound } from 'next/navigation'
 import LoyaltyCardVisual from '@/components/LoyaltyCardVisual'
 import CodeRedeemForm from '@/components/CodeRedeemForm'
 import RewardsList from '@/components/RewardsList'
+import NotificationsList from '@/components/NotificationsList'
 
 export default async function CardDetailPage({ params }: { params: Promise<{ cardId: string }> }) {
   const client = await getClient()
@@ -11,7 +12,7 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
   const { cardId } = await params
   const token = await getToken()
 
-  const [cardRes, rulesRes] = await Promise.all([
+  const [cardRes, rulesRes, notificationsRes] = await Promise.all([
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/loyalty-cards/${cardId}`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
@@ -20,11 +21,16 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
     }),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/loyalty-cards/${cardId}/notifications`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store',
+    }),
   ])
 
   if (!cardRes.ok) notFound()
   const card = await cardRes.json()
   const rules = rulesRes.ok ? await rulesRes.json() : []
+  const notifications = notificationsRes.ok ? await notificationsRes.json() : []
 
   return (
     <div className="space-y-6">
@@ -35,6 +41,8 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
         pointsBalance={card.pointsBalance}
         clientName={client.name}
       />
+
+      <NotificationsList cardId={card.id} initialNotifications={notifications} brandColor={card.restaurant.brandColor} />
 
       <CodeRedeemForm cardId={card.id} brandColor={card.restaurant.brandColor} />
 

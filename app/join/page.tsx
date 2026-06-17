@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import BottomNav from '@/components/BottomNav'
@@ -17,7 +17,7 @@ function extractToken(scannedValue: string): string {
   return scannedValue
 }
 
-export default function JoinPage() {
+function JoinContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -197,5 +197,13 @@ export default function JoinPage() {
       </div>
       <BottomNav />
     </div>
+  )
+}
+
+export default function JoinPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#FAF7F2]"><p className="text-sm text-stone-400">Chargement...</p></div>}>
+      <JoinContent />
+    </Suspense>
   )
 }

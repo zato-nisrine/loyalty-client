@@ -49,7 +49,7 @@ function RegisterContent() {
 
         <div className="space-y-3 rounded-2xl border border-stone-200 bg-white p-5">
           <div className="space-y-1">
-            <label className="text-sm text-stone-600">Nom complet</label>
+            <label className="text-sm text-stone-600">Votre Pseudo</label>
             <input
               type="text"
               value={name}

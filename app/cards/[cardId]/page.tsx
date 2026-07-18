@@ -35,22 +35,22 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
   return (
     <div className="space-y-6">
       <LoyaltyCardVisual
-        commerceName={card.commerce.name}
-        logoUrl={card.commerce.logoUrl}
-        brandColor={card.commerce.brandColor}
+        commerceName={card.restaurant.name}
+        logoUrl={card.restaurant.logoUrl}
+        brandColor={card.restaurant.brandColor}
         pointsBalance={card.pointsBalance}
         clientName={client.name}
       />
 
-      <NotificationsList cardId={card.id} initialNotifications={notifications} brandColor={card.commerce.brandColor} />
+      <NotificationsList cardId={card.id} initialNotifications={notifications} brandColor={card.restaurant.brandColor} />
 
-      <CodeRedeemForm cardId={card.id} brandColor={card.commerce.brandColor} />
+      <CodeRedeemForm cardId={card.id} brandColor={card.restaurant.brandColor} />
 
       <RewardsList
         cardId={card.id}
         rules={rules}
         pointsBalance={card.pointsBalance}
-        brandColor={card.commerce.brandColor}
+        brandColor={card.restaurant.brandColor}
       />
     </div>
   )

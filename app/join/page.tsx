@@ -109,7 +109,7 @@ function JoinContent() {
           <p className="text-sm text-stone-500">
             {pendingToken
               ? 'Connectez-vous ou créez un compte pour ajouter cette carte de fidélité.'
-              : 'Connectez-vous ou créez un compte pour rejoindre un restaurant.'}
+              : 'Connectez-vous ou créez un compte pour rejoindre un commerce.'}
           </p>
           <div className="space-y-3">
             <Link
@@ -136,7 +136,7 @@ function JoinContent() {
         <div className="mx-auto max-w-sm space-y-5">
           <div className="text-center">
             <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-stone-900">
-              Rejoindre un restaurant
+              Rejoindre un commerce
             </h1>
             <p className="mt-1 text-sm text-stone-500">Scannez le QR code affiché en caisse</p>
           </div>
@@ -169,7 +169,7 @@ function JoinContent() {
           ) : (
             <form onSubmit={handleManualSubmit} className="space-y-3 rounded-2xl border border-stone-200 bg-white p-5">
               <div className="space-y-1">
-                <label className="text-sm text-stone-600">Code du restaurant</label>
+                <label className="text-sm text-stone-600">Code du commerce</label>
                 <input
                   type="text"
                   value={qrCodeToken}

@@ -36,7 +36,7 @@ export default function RewardsList({
       return
     }
 
-    setMessage('Demande envoyée, présentez-vous au restaurant')
+    setMessage('Demande envoyée, présentez-vous au commerce')
     router.refresh()
   }
 

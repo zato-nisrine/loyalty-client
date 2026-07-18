@@ -44,7 +44,7 @@ function RegisterContent() {
           <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold text-stone-900">
             Créer mon compte
           </h1>
-          <p className="mt-1 text-sm text-stone-500">Rejoignez vos restaurants préférés</p>
+          <p className="mt-1 text-sm text-stone-500">Rejoignez vos commerces préférés</p>
         </div>
 
         <div className="space-y-3 rounded-2xl border border-stone-200 bg-white p-5">

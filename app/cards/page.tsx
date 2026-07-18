@@ -23,7 +23,7 @@ export default async function CardsPage() {
             href="/join"
             className="mt-4 inline-block rounded-full bg-stone-900 px-5 py-2 text-sm font-medium text-white"
           >
-            Rejoindre un restaurant
+            Rejoindre un commerce
           </Link>
         </div>
       )}
@@ -31,9 +31,9 @@ export default async function CardsPage() {
       {cards.map((card: any) => (
         <Link key={card.id} href={`/cards/${card.id}`} className="block">
           <LoyaltyCardVisual
-            restaurantName={card.restaurant.name}
-            logoUrl={card.restaurant.logoUrl}
-            brandColor={card.restaurant.brandColor}
+            commerceName={card.commerce.name}
+            logoUrl={card.commerce.logoUrl}
+            brandColor={card.commerce.brandColor}
             pointsBalance={card.pointsBalance}
             clientName={client.name}
           />
@@ -45,7 +45,7 @@ export default async function CardsPage() {
           href="/join"
           className="block rounded-2xl border border-dashed border-stone-300 bg-white p-4 text-center text-sm font-medium text-stone-600"
         >
-          + Rejoindre un autre restaurant
+          + Rejoindre un autre commerce
         </Link>
       )}
     </div>

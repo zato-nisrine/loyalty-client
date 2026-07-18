@@ -10,13 +10,13 @@ function darken(hex: string, amount: number) {
 }
 
 export default function LoyaltyCardVisual({
-  restaurantName,
+  commerceName,
   logoUrl,
   brandColor,
   pointsBalance,
   clientName,
 }: {
-  restaurantName: string
+  commerceName: string
   logoUrl?: string | null
   brandColor: string
   pointsBalance: number
@@ -36,14 +36,14 @@ export default function LoyaltyCardVisual({
       <div className="relative z-10 flex h-full flex-col justify-between">
         <div className="flex items-center gap-2.5">
           {logoUrl ? (
-            <img src={logoUrl} alt={restaurantName} className="h-9 w-9 rounded-lg object-cover" />
+            <img src={logoUrl} alt={commerceName} className="h-9 w-9 rounded-lg object-cover" />
           ) : (
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/90 text-sm font-semibold" style={{ color }}>
-              {restaurantName.charAt(0)}
+              {commerceName.charAt(0)}
             </div>
           )}
           <p className="font-[family-name:var(--font-display)] text-base font-semibold text-white">
-            {restaurantName}
+            {commerceName}
           </p>
         </div>
 

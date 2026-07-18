@@ -21,4 +21,4 @@ export default async function CardsLayout({ children }: { children: React.ReactN
       <BottomNav />
     </div>
   )
-}
+} 

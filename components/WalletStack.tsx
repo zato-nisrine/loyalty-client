@@ -13,8 +13,8 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
 
   if (cards.length === 0) return null
 
-  const CARD_OFFSET = 40
-  const CARD_SCALE = 0.95
+  const CARD_OFFSET = 35
+  const CARD_SCALE = 0.96
 
   function handleTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX

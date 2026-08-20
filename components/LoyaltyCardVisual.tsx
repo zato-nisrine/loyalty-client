@@ -54,7 +54,7 @@ export default function LoyaltyCardVisual({
       <div className="relative z-10 flex h-full flex-col justify-between">
         <div className="flex items-center gap-2 sm:gap-3">
           {logoUrl ? (
-            <div className="relative">
+            <div className="relative flex-shrink-0">
               <img 
                 src={logoUrl} 
                 alt={commerceName} 
@@ -64,43 +64,43 @@ export default function LoyaltyCardVisual({
             </div>
           ) : (
             <div 
-              className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-white/95 text-base sm:text-lg font-bold shadow-lg ring-2 ring-white/30"
+              className="flex h-10 w-10 sm:h-11 sm:w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white/95 text-base sm:text-lg font-bold shadow-lg ring-2 ring-white/30"
               style={{ color }}
             >
               {commerceName.charAt(0)}
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <p className="font-[family-name:var(--font-display)] text-sm sm:text-base font-bold text-white tracking-wide truncate">
+            <p className="font-[family-name:var(--font-display)] text-sm sm:text-base font-bold text-white tracking-normal truncate">
               {commerceName}
             </p>
-            <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/80">Carte de fidélité</p>
+            <p className="text-[10px] sm:text-[11px] uppercase tracking-normal text-white/90">Carte de fidélité</p>
           </div>
-          <div className="flex gap-1">
+          <div className="flex gap-1 flex-shrink-0">
+            <div className="h-5 w-1 rounded-full bg-white/50" />
             <div className="h-5 w-1 rounded-full bg-white/40" />
             <div className="h-5 w-1 rounded-full bg-white/30" />
-            <div className="h-5 w-1 rounded-full bg-white/20" />
           </div>
         </div>
 
         <div className="space-y-1">
-          <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-white/90 font-medium">Solde de points</p>
+          <p className="text-[10px] sm:text-[11px] uppercase tracking-normal text-white font-semibold">Solde de points</p>
           <div className="flex items-baseline gap-1 sm:gap-2">
-            <p className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold text-white tracking-tight">
+            <p className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold text-white tracking-normal">
               {pointsBalance}
             </p>
-            <p className="text-xs sm:text-sm font-semibold text-white/90">pts</p>
+            <p className="text-xs sm:text-sm font-bold text-white">pts</p>
           </div>
         </div>
 
         <div className="flex items-end justify-between">
-          <div className="min-w-0">
-            <p className="text-xs sm:text-sm font-semibold text-white truncate">{clientName}</p>
-            <p className="text-[9px] sm:text-[10px] text-white/70">Membre actif</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs sm:text-sm font-bold text-white truncate">{clientName}</p>
+            <p className="text-[10px] sm:text-[11px] text-white/80">Membre actif</p>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="h-7 w-10 sm:h-8 sm:w-12 rounded bg-white/30 backdrop-blur-sm" />
-            <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full border-2 border-white/40" />
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="h-7 w-10 sm:h-8 sm:w-12 rounded bg-white/40 backdrop-blur-sm" />
+            <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full border-2 border-white/50" />
           </div>
         </div>
       </div>

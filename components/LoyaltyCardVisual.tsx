@@ -1,3 +1,5 @@
+'use client'
+
 function darken(hex: string, amount: number) {
   const num = parseInt(hex.replace('#', ''), 16)
   let r = (num >> 16) - amount

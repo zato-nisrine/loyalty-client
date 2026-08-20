@@ -4,6 +4,7 @@ import LoyaltyCardVisual from '@/components/LoyaltyCardVisual'
 import CodeRedeemForm from '@/components/CodeRedeemForm'
 import RewardsList from '@/components/RewardsList'
 import NotificationsList from '@/components/NotificationsList'
+import QRCode from 'react-qr-code'
 
 export default async function CardDetailPage({ params }: { params: Promise<{ cardId: string }> }) {
   const client = await getClient()
@@ -41,6 +42,14 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
         pointsBalance={card.pointsBalance}
         clientName={client.name}
       />
+
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+        <p className="mb-4 text-sm font-medium text-stone-700">Votre QR Code unique</p>
+        <div className="rounded-xl border-4 border-stone-100 p-2">
+          <QRCode value={card.id} size={160} style={{ height: 'auto', maxWidth: '100%', width: '100%' }} viewBox={`0 0 160 160`} />
+        </div>
+        <p className="mt-4 text-xs text-stone-400">Présentez ce code au commerçant</p>
+      </div>
 
       <NotificationsList cardId={card.id} initialNotifications={notifications} brandColor={card.restaurant.brandColor} />
 

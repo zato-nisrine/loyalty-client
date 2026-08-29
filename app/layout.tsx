@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import NotificationManager from "@/components/NotificationManager";
 
 export const metadata: Metadata = {
   title: "Fidèle — Carte de fidélité",
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {children}
         <ServiceWorkerRegister />
+        <NotificationManager />
       </body>
     </html>
   );

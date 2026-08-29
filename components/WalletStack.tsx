@@ -13,8 +13,10 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
 
   if (cards.length === 0) return null
 
-  const CARD_OFFSET = 35
-  const CARD_SCALE = 0.96
+  const FAN_X = 22
+  const FAN_Y = 10
+  const FAN_ROTATION = 6
+  const CARD_SCALE = 0.94
 
   function handleTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX
@@ -48,37 +50,37 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
     }
   }
 
-  const cardHeight = 220
-  const totalHeight = cardHeight + (cards.length - 1) * CARD_OFFSET
+  const cardHeight = 210
+  const maxSpread = (cards.length - 1) * FAN_Y + 24
+  const totalHeight = cardHeight + maxSpread
 
   return (
-    <div className="w-full select-none py-4">
-      <div 
-        style={{ height: totalHeight, position: 'relative' }} 
+    <div className="w-full select-none py-2">
+      <div
+        style={{ height: totalHeight, position: 'relative' }}
         className="w-full mx-auto max-w-md"
       >
         {cards.map((card, index) => {
           const isActive = index === activeIndex
-          const isBehind = index < activeIndex
-          const isAhead = index > activeIndex
-          
-          let offset, scale, rotation, opacity
-          
+          const distance = index - activeIndex
+
+          let translateX, translateY, rotation, scale, zIndex, opacity
+
           if (isActive) {
-            offset = activeIndex * CARD_OFFSET
-            scale = 1
+            translateX = 0
+            translateY = 0
             rotation = 0
+            scale = 1
+            zIndex = 50
             opacity = 1
-          } else if (isBehind) {
-            offset = index * CARD_OFFSET
-            scale = CARD_SCALE
-            rotation = -2
-            opacity = 0.7
           } else {
-            offset = activeIndex * CARD_OFFSET + (index - activeIndex) * CARD_OFFSET
+            const behindCount = distance < 0 ? cards.length + distance : distance
+            translateX = distance < 0 ? -FAN_X * Math.abs(distance) : FAN_X * distance
+            translateY = FAN_Y * Math.abs(distance) + 6
+            rotation = distance < 0 ? -FAN_ROTATION : FAN_ROTATION
             scale = CARD_SCALE
-            rotation = 2
-            opacity = 0.5
+            zIndex = cards.length - Math.abs(distance)
+            opacity = Math.max(0.4, 0.85 - Math.abs(distance) * 0.15)
           }
 
           return (
@@ -98,12 +100,13 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
               }}
               style={{
                 position: 'absolute',
-                top: offset,
+                top: 0,
                 left: 0,
                 right: 0,
-                zIndex: isActive ? 50 : cards.length - index,
-                transform: `scale(${scale}) rotate(${rotation}deg)`,
-                transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                zIndex,
+                transform: `translate(${translateX}px, ${translateY}px) scale(${scale}) rotate(${rotation}deg)`,
+                transformOrigin: 'bottom center',
+                transition: 'all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 cursor: 'pointer',
                 touchAction: 'pan-y',
                 opacity,
@@ -117,39 +120,26 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
                 clientName={clientName}
                 isActive={isActive}
               />
-              {!isActive && (
-                <div 
-                  className="absolute inset-0 rounded-3xl bg-black/20 backdrop-blur-sm transition-all duration-300"
-                  style={{ opacity: isActive ? 0 : 0.4 }}
-                />
-              )}
             </div>
           )
         })}
       </div>
 
       {cards.length > 1 && (
-        <div className="mt-6 flex justify-center gap-2">
+        <div className="mt-5 flex justify-center gap-2">
           {cards.map((_, index) => (
             <button
               key={index}
               onClick={() => setActiveIndex(index)}
-              className="h-2 rounded-full transition-all duration-300 hover:scale-110"
+              className="h-1.5 rounded-full transition-all duration-300"
               style={{
-                width: index === activeIndex ? 24 : 8,
-                backgroundColor: index === activeIndex ? '#1C1917' : '#D6D3D1',
-                transform: index === activeIndex ? 'scale(1.2)' : 'scale(1)',
+                width: index === activeIndex ? 20 : 6,
+                backgroundColor: index === activeIndex ? 'var(--foreground)' : 'var(--border-subtle)',
               }}
             />
           ))}
         </div>
       )}
-      
-      <div className="mt-4 text-center">
-        <p className="text-xs text-stone-400 animate-pulse">
-          {cards.length > 1 ? 'Glissez ou tapez pour naviguer' : 'Tapez pour voir les détails'}
-        </p>
-      </div>
     </div>
   )
 }

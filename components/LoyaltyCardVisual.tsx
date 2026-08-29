@@ -19,7 +19,7 @@ export default function LoyaltyCardVisual({
 
   return (
     <div
-      className={`relative aspect-[1.586/1] w-full overflow-hidden rounded-3xl p-5 sm:p-7 transition-all duration-700 ${
+      className={`relative aspect-[1.586/1] w-full overflow-hidden rounded-3xl p-6 sm:p-8 transition-all duration-700 ${
         isActive ? 'shadow-2xl scale-100' : 'shadow-lg scale-95 opacity-80'
       }`}
       style={{
@@ -29,13 +29,14 @@ export default function LoyaltyCardVisual({
           : '0 10px 30px -5px rgba(0, 0, 0, 0.3)',
       }}
     >
-      {/* Gradient glow effect */}
+      {/* Gradient glow effect - top right */}
       <div 
-        className="absolute -right-20 -top-20 h-80 w-80 rounded-full opacity-20 blur-3xl"
+        className="absolute -right-32 -top-32 h-96 w-96 rounded-full opacity-30 blur-3xl"
         style={{ background: color }}
       />
+      {/* Gradient glow effect - bottom left */}
       <div 
-        className="absolute -left-16 -bottom-16 h-64 w-64 rounded-full opacity-10 blur-3xl"
+        className="absolute -left-24 -bottom-24 h-72 w-72 rounded-full opacity-20 blur-3xl"
         style={{ background: color }}
       />
 
@@ -48,60 +49,65 @@ export default function LoyaltyCardVisual({
       <div className="absolute inset-0 rounded-3xl border border-white/10" />
 
       <div className="relative z-10 flex h-full flex-col justify-between">
-        {/* Header */}
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
+        {/* Header - Logo and brand name */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
             {logoUrl ? (
               <div className="relative">
                 <img 
                   src={logoUrl} 
                   alt={commerceName} 
-                  className="h-12 w-12 rounded-xl object-cover shadow-lg" 
+                  className="h-14 w-14 rounded-2xl object-cover shadow-xl" 
                 />
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent" />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent" />
               </div>
             ) : (
               <div 
-                className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 text-xl font-bold"
+                className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-2xl font-bold"
                 style={{ color }}
               >
                 {commerceName.charAt(0)}
               </div>
             )}
             <div>
-              <p className="font-[family-name:var(--font-display)] text-base font-semibold text-white">
+              <p className="font-[family-name:var(--font-display)] text-lg font-bold text-white tracking-tight">
                 {commerceName}
               </p>
-              <p className="text-xs text-gray-500">Carte de fidélité</p>
+              <p className="text-xs text-gray-500 uppercase tracking-widest">Carte de fidélité</p>
             </div>
           </div>
-          <div className="flex gap-1.5">
-            <div className="h-6 w-1.5 rounded-full bg-white/20" />
-            <div className="h-6 w-1.5 rounded-full bg-white/15" />
-            <div className="h-6 w-1.5 rounded-full bg-white/10" />
+          <div className="flex gap-2">
+            <div className="h-7 w-2 rounded-full bg-white/30" />
+            <div className="h-7 w-2 rounded-full bg-white/20" />
+            <div className="h-7 w-2 rounded-full bg-white/10" />
           </div>
         </div>
 
-        {/* Points balance */}
-        <div className="space-y-2">
-          <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Solde de points</p>
-          <div className="flex items-baseline gap-2">
-            <p className="font-[family-name:var(--font-display)] text-5xl sm:text-6xl font-bold text-white tracking-tight">
-              {pointsBalance}
+        {/* Center - Points balance (like card number) */}
+        <div className="space-y-3">
+          <p className="text-xs font-medium text-gray-500 uppercase tracking-widest">Solde de points</p>
+          <div className="flex items-baseline gap-3">
+            <p className="font-[family-name:var(--font-display)] text-6xl sm:text-7xl font-bold text-white tracking-tight">
+              {pointsBalance.toLocaleString()}
             </p>
-            <p className="text-sm font-semibold text-gray-400">pts</p>
+            <p className="text-base font-semibold text-gray-400">pts</p>
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Footer - Client name and decorative elements */}
         <div className="flex items-end justify-between">
-          <div>
-            <p className="text-sm font-semibold text-white">{clientName}</p>
-            <p className="text-xs text-gray-500">Membre actif</p>
+          <div className="space-y-1">
+            <p className="text-xs text-gray-500 uppercase tracking-widest">Titulaire</p>
+            <p className="text-sm font-semibold text-white tracking-wide">{clientName.toUpperCase()}</p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-12 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10" />
-            <div className="h-8 w-8 rounded-full border-2 border-white/20 bg-white/5" />
+          <div className="flex items-center gap-4">
+            <div className="flex flex-col items-end gap-1">
+              <p className="text-xs text-gray-500 uppercase tracking-widest">Valide</p>
+              <p className="text-sm font-semibold text-white">12/28</p>
+            </div>
+            <div className="h-10 w-14 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full border-2 border-white/30" />
+            </div>
           </div>
         </div>
       </div>

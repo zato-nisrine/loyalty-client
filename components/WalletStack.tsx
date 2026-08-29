@@ -13,10 +13,8 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
 
   if (cards.length === 0) return null
 
-  const FAN_X = 22
-  const FAN_Y = 10
-  const FAN_ROTATION = 6
-  const CARD_SCALE = 0.94
+  const ROTATION_STEP = 9
+  const SCALE_STEP = 0.045
 
   function handleTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX
@@ -50,38 +48,16 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
     }
   }
 
-  const cardHeight = 210
-  const maxSpread = (cards.length - 1) * FAN_Y + 24
-  const totalHeight = cardHeight + maxSpread
-
   return (
     <div className="w-full select-none py-2">
-      <div
-        style={{ height: totalHeight, position: 'relative' }}
-        className="w-full mx-auto max-w-md"
-      >
+      <div className="relative w-full" style={{ height: 380 }}>
         {cards.map((card, index) => {
-          const isActive = index === activeIndex
           const distance = index - activeIndex
-
-          let translateX, translateY, rotation, scale, zIndex, opacity
-
-          if (isActive) {
-            translateX = 0
-            translateY = 0
-            rotation = 0
-            scale = 1
-            zIndex = 50
-            opacity = 1
-          } else {
-            const behindCount = distance < 0 ? cards.length + distance : distance
-            translateX = distance < 0 ? -FAN_X * Math.abs(distance) : FAN_X * distance
-            translateY = FAN_Y * Math.abs(distance) + 6
-            rotation = distance < 0 ? -FAN_ROTATION : FAN_ROTATION
-            scale = CARD_SCALE
-            zIndex = cards.length - Math.abs(distance)
-            opacity = Math.max(0.4, 0.85 - Math.abs(distance) * 0.15)
-          }
+          const isActive = distance === 0
+          const rotation = distance * ROTATION_STEP
+          const scale = Math.max(0.8, 1 - Math.abs(distance) * SCALE_STEP)
+          const zIndex = isActive ? 50 : cards.length - Math.abs(distance)
+          const opacity = Math.max(0.55, 1 - Math.abs(distance) * 0.12)
 
           return (
             <div
@@ -100,16 +76,17 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
               }}
               style={{
                 position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
+                left: '50%',
+                bottom: 0,
+                width: '62%',
+                maxWidth: 220,
                 zIndex,
-                transform: `translate(${translateX}px, ${translateY}px) scale(${scale}) rotate(${rotation}deg)`,
+                opacity,
+                transform: `translateX(-50%) rotate(${rotation}deg) scale(${scale})`,
                 transformOrigin: 'bottom center',
                 transition: 'all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 cursor: 'pointer',
                 touchAction: 'pan-y',
-                opacity,
               }}
             >
               <LoyaltyCardVisual
@@ -126,7 +103,7 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
       </div>
 
       {cards.length > 1 && (
-        <div className="mt-5 flex justify-center gap-2">
+        <div className="mt-3 flex justify-center gap-2">
           {cards.map((_, index) => (
             <button
               key={index}

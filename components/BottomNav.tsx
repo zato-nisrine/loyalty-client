@@ -30,7 +30,7 @@ export default function BottomNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white pb-[env(safe-area-inset-bottom)]">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border-subtle bg-background pb-[env(safe-area-inset-bottom)]">
       <div className="mx-auto flex max-w-lg justify-around">
         {links.map((link) => {
           const active = pathname === link.href || (link.href === '/cards' && pathname.startsWith('/cards/'))
@@ -39,7 +39,7 @@ export default function BottomNav() {
               key={link.href}
               href={link.href}
               className={`flex flex-1 flex-col items-center gap-1 py-2.5 text-xs font-medium ${
-                active ? 'text-stone-900' : 'text-stone-400'
+                active ? 'text-foreground' : 'text-text-muted'
               }`}
             >
               {link.icon(active)}

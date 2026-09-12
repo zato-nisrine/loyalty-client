@@ -27,7 +27,6 @@ export default function QrScannerComponent({ onScan }: { onScan: (data: string) 
         highlightScanRegion: true,
         highlightCodeOutline: true,
         preferredCamera: 'environment',
-        maxScansPerSecond: 15,
         calculateScanRegion: (video) => {
           const size = Math.round(Math.min(video.videoWidth, video.videoHeight) * 0.9)
           return {

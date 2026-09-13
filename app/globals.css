@@ -45,3 +45,13 @@ select {
   background-color: var(--surface);
   color: var(--foreground);
 }
+
+@keyframes card-icon-float {
+  0%, 100% { transform: translateY(0) rotate(var(--icon-rot, 0deg)); }
+  50% { transform: translateY(-10px) rotate(var(--icon-rot, 0deg)); }
+}
+
+.card-bg-icon {
+  animation: card-icon-float var(--icon-duration, 6s) ease-in-out infinite;
+  animation-delay: var(--icon-delay, 0s);
+}

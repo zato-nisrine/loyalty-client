@@ -93,6 +93,7 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
                 commerceName={card.commerce?.name || card.restaurant?.name || ''}
                 logoUrl={card.commerce?.logoUrl || card.restaurant?.logoUrl}
                 brandColor={card.commerce?.brandColor || card.restaurant?.brandColor || '#C2410C'}
+                businessType={card.commerce?.businessType || card.restaurant?.businessType}
                 pointsBalance={card.pointsBalance}
                 clientName={clientName}
                 isActive={isActive}

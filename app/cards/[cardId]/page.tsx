@@ -36,6 +36,7 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
           commerceName={card.restaurant.name}
           logoUrl={card.restaurant.logoUrl}
           brandColor={card.restaurant.brandColor}
+          businessType={card.restaurant.businessType}
           pointsBalance={card.pointsBalance}
           clientName={client.name}
         />

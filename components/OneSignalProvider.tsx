@@ -21,6 +21,8 @@ export default function OneSignalProvider({ clientId }: { clientId: string }) {
               enable: true,
             },
             allowLocalhostAsSecureOrigin: true,
+            serviceWorkerParam: { scope: '/onesignal/' },
+            serviceWorkerPath: 'onesignal/OneSignalSDKWorker.js',
           })
 
           // Set external user ID to client ID

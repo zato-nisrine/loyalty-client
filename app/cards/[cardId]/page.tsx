@@ -42,7 +42,7 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
       </div>
       <div className="flex flex-col items-center justify-center rounded-2xl border border-border-subtle bg-surface p-6 shadow-sm">
         <p className="mb-4 text-sm font-medium text-foreground">Votre QR Code unique</p>
-        <div className="rounded-xl border-4 border-surface-muted p-2">
+        <div className="rounded-xl border-4 border-surface-muted bg-white p-6">
           <QRCode value={card.id} size={220} style={{ height: 'auto', maxWidth: '100%', width: '100%' }} viewBox={`0 0 220 220`} />
         </div>
         <p className="mt-4 text-xs text-text-muted">Présentez ce code au commerçant</p>

@@ -3,6 +3,7 @@ import { redirect, notFound } from 'next/navigation'
 import LoyaltyCardVisual from '@/components/LoyaltyCardVisual'
 import CodeRedeemForm from '@/components/CodeRedeemForm'
 import RewardsList from '@/components/RewardsList'
+import DeleteCardButton from '@/components/DeleteCardButton'
 import NotificationsList from '@/components/NotificationsList'
 import QRCode from 'react-qr-code'
 
@@ -60,6 +61,7 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
           brandColor={card.restaurant.brandColor}
         />
       </div>
+      <DeleteCardButton cardId={card.id} />
     </div>
   )
 }

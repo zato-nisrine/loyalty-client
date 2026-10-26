@@ -1,11 +1,11 @@
-{
-  "name": "Fidèle — Carte de fidélité",
-  "short_name": "Fidèle",
-  "description": "Vos cartes de fidélité, vos points, vos récompenses.",
+﻿{
+  "name": "LOYNIVA — Mes cartes de fidélité",
+  "short_name": "LOYNIVA",
+  "description": "Vos cartes de fidélité, vos points et vos récompenses. Chaque visite compte.",
   "start_url": "/cards",
   "display": "standalone",
-  "background_color": "#FAF7F2",
-  "theme_color": "#C2410C",
+  "background_color": "#F5F8FC",
+  "theme_color": "#102A43",
   "orientation": "portrait",
   "icons": [
     {

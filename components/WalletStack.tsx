@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
@@ -92,7 +92,7 @@ export default function WalletStack({ cards, clientName }: { cards: any[]; clien
               <LoyaltyCardVisual
                 commerceName={card.commerce?.name || card.restaurant?.name || ''}
                 logoUrl={card.commerce?.logoUrl || card.restaurant?.logoUrl}
-                brandColor={card.commerce?.brandColor || card.restaurant?.brandColor || '#C2410C'}
+                brandColor={card.commerce?.brandColor || card.restaurant?.brandColor || '#102A43'}
                 businessType={card.commerce?.businessType || card.restaurant?.businessType}
                 pointsBalance={card.pointsBalance}
                 clientName={clientName}

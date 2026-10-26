@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 type IconDef = { path: React.ReactNode; top: string; left: string; size: number; rotate: number; duration: number; delay: number }
 
@@ -78,7 +78,7 @@ export default function LoyaltyCardVisual({
   isActive?: boolean
   businessType?: string
 }) {
-  const color = brandColor || '#C2410C'
+  const color = brandColor || '#102A43'
   const icons = getBusinessIcons(businessType)
 
   return (
@@ -154,7 +154,7 @@ export default function LoyaltyCardVisual({
           <p className="font-[family-name:var(--font-display)] text-base font-bold text-white tracking-tight truncate">
             {commerceName}
           </p>
-          <p className="text-[10px] text-gray-500 uppercase tracking-widest">Carte de fidélité</p>
+          <p className="text-[10px] text-gray-500 uppercase tracking-widest">Carte de fidÃ©litÃ©</p>
         </div>
 
         <div>

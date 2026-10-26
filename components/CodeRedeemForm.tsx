@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -55,7 +55,7 @@ export default function CodeRedeemForm({ cardId, brandColor }: { cardId: string;
           type="submit"
           disabled={loading}
           className="rounded-full px-5 py-2.5 text-sm font-medium text-white disabled:opacity-50"
-          style={{ backgroundColor: brandColor || '#C2410C' }}
+          style={{ backgroundColor: brandColor || '#102A43' }}
         >
           {loading ? '...' : 'Valider'}
         </button>
@@ -63,7 +63,7 @@ export default function CodeRedeemForm({ cardId, brandColor }: { cardId: string;
       {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
       {success && (
         <p className="mt-2 text-sm font-medium text-green-700">
-          +{success.pointsEarned} points crédités !
+          +{success.pointsEarned} points crÃ©ditÃ©s !
         </p>
       )}
     </div>

@@ -1,4 +1,4 @@
-import { getClient, getToken } from '@/lib/auth'
+﻿import { getClient, getToken } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import WalletStack from '@/components/WalletStack'
@@ -24,7 +24,7 @@ function txLabel(tx: Transaction) {
   if (tx.type === 'credit') {
     return tx.amountFcfa ? `Achat ${tx.amountFcfa.toLocaleString()} FCFA` : 'Bonus'
   }
-  return 'Récompense échangée'
+  return 'RÃ©compense Ã©changÃ©e'
 }
 
 export default async function CardsPage() {
@@ -43,17 +43,17 @@ export default async function CardsPage() {
       <div className="rounded-3xl border-2 border-dashed border-border-subtle bg-surface p-8 sm:p-12 text-center shadow-sm mt-4">
         <div className="mb-6 flex justify-center">
           <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-surface-muted flex items-center justify-center">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C2410C" strokeWidth="1.5">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4F9DCE" strokeWidth="1.5">
               <rect x="2" y="5" width="20" height="14" rx="2" />
               <path d="M2 10h20" />
             </svg>
           </div>
         </div>
         <h3 className="font-[family-name:var(--font-display)] text-base sm:text-lg font-semibold text-foreground mb-2">
-          Aucune carte de fidélité
+          Aucune carte de fidÃ©litÃ©
         </h3>
         <p className="text-sm text-text-muted mb-6">
-          Scannez le QR code d'un commerce pour rejoindre son programme de fidélité
+          Scannez le QR code d'un commerce pour rejoindre son programme de fidÃ©litÃ©
         </p>
         <Link
           href="/join"
@@ -128,7 +128,7 @@ export default async function CardsPage() {
               <path d="M12 8c-1.5 0-3-1-3-2.5S10.5 3 12 4c1.5-1 3-.5 3 1S13.5 8 12 8Z" />
             </svg>
           </span>
-          <span className="text-xs text-text-muted">Récompenses</span>
+          <span className="text-xs text-text-muted">RÃ©compenses</span>
         </Link>
 
         <Link
@@ -146,7 +146,7 @@ export default async function CardsPage() {
 
       {transactions.length > 0 && (
         <div>
-          <p className="mb-3.5 text-xs font-medium uppercase tracking-wide text-text-muted">Historique récent</p>
+          <p className="mb-3.5 text-xs font-medium uppercase tracking-wide text-text-muted">Historique rÃ©cent</p>
           <div className="flex flex-col">
             {transactions.map((tx) => (
               <div key={tx.id} className="flex items-center gap-3 border-b border-border-subtle py-3 last:border-0">
@@ -165,7 +165,7 @@ export default async function CardsPage() {
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm text-foreground">{tx.commerceName}</p>
                   <p className="mt-0.5 text-xs text-text-muted">
-                    {txLabel(tx)} · {formatRelative(tx.createdAt)}
+                    {txLabel(tx)} Â· {formatRelative(tx.createdAt)}
                   </p>
                 </div>
                 <p className={`shrink-0 text-sm font-medium ${tx.type === 'credit' ? 'text-green-400' : 'text-red-400'}`}>

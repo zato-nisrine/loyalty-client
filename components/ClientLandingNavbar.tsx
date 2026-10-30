@@ -1,10 +1,11 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import LoynivaLogo from './LoynivaLogo'
 import ThemeToggle from './ThemeToggle'
+import { useInstallPwa } from './InstallPwaContext'
 
 interface ClientLandingNavbarProps {
   client: { name: string; email?: string } | null
@@ -13,6 +14,7 @@ interface ClientLandingNavbarProps {
 export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
+  const { promptInstall, isStandalone, isInstalled } = useInstallPwa()
 
   useEffect(() => {
     if (open) {
@@ -50,6 +52,20 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
 
         {/* Desktop Navigation (>= sm) */}
         <div className="hidden sm:flex sm:items-center sm:gap-3">
+          {!isStandalone && !isInstalled && (
+            <button
+              onClick={promptInstall}
+              className="flex items-center gap-1.5 rounded-xl border border-accent/30 bg-accent/10 px-3.5 py-2 text-xs font-bold text-accent transition-all hover:bg-accent/20 active:scale-95"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span>Installer l'app</span>
+            </button>
+          )}
+
           <ThemeToggle />
 
           {client ? (
@@ -82,6 +98,21 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
 
         {/* Mobile Actions & Burger (< sm) */}
         <div className="flex items-center gap-2 sm:hidden">
+          {!isStandalone && !isInstalled && (
+            <button
+              onClick={promptInstall}
+              title="Installer sur l'écran"
+              className="flex items-center gap-1 rounded-xl border border-accent/30 bg-accent/10 px-2.5 py-1.5 text-xs font-bold text-accent transition-all hover:bg-accent/20 active:scale-95"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span>Installer</span>
+            </button>
+          )}
+
           <ThemeToggle />
           <button
             onClick={() => setOpen(true)}
@@ -100,7 +131,7 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
         </div>
       </header>
 
-      {/* Mobile Drawer (Sidebar) */}
+      {/* Mobile Slide-out Menu Drawer */}
       {open && (
         <div className="fixed inset-0 z-50 sm:hidden" aria-modal="true" role="dialog">
           {/* Backdrop */}
@@ -110,14 +141,11 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
             aria-hidden="true"
           />
 
-          {/* Drawer Sidebar */}
-          <aside className="fixed inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col justify-between border-r border-border-subtle bg-surface p-5 shadow-2xl transition-transform duration-300 ease-out">
-            <div>
-              {/* Header */}
-              <div className="mb-5 flex items-center justify-between border-b border-border-subtle pb-4">
-                <Link href="/" onClick={() => setOpen(false)}>
-                  <LoynivaLogo size="sm" showTagline={false} />
-                </Link>
+          {/* Drawer content */}
+          <aside className="fixed inset-y-0 right-0 flex w-72 max-w-[85vw] flex-col justify-between border-l border-border-subtle bg-surface p-5 shadow-2xl transition-transform duration-300 ease-out">
+            <div className="flex-1 overflow-y-auto">
+              <div className="mb-6 flex items-center justify-between border-b border-border-subtle pb-4">
+                <LoynivaLogo size="sm" showTagline={false} />
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Fermer le menu"
@@ -131,6 +159,25 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
                       strokeLinecap="round"
                     />
                   </svg>
+                </button>
+              </div>
+
+              {/* Install PWA Button in Mobile Drawer */}
+              <div className="mb-4">
+                <button
+                  onClick={() => {
+                    setOpen(false)
+                    promptInstall()
+                  }}
+                  className="flex w-full items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 px-3.5 py-2.5 text-sm font-bold text-accent transition-all hover:bg-accent/20 active:scale-95"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  <span>Installer sur l'écran</span>
+                  <span className="ml-auto rounded-md bg-accent/20 px-1.5 py-0.5 text-[10px] font-extrabold text-accent">PWA</span>
                 </button>
               </div>
 
@@ -175,6 +222,18 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
                       </svg>
                       Rejoindre un commerce
                     </Link>
+
+                    <Link
+                      href="/installer"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium text-text-muted transition-colors hover:bg-surface-muted hover:text-foreground"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16v-4M12 8h.01" />
+                      </svg>
+                      Guide d'installation
+                    </Link>
                   </nav>
                 </>
               ) : (
@@ -208,6 +267,18 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
                         <rect x="7" y="7" width="10" height="10" rx="1" />
                       </svg>
                       Scanner un QR Code
+                    </Link>
+
+                    <Link
+                      href="/installer"
+                      onClick={() => setOpen(false)}
+                      className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-text-muted hover:text-foreground transition-colors hover:bg-surface-muted"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16v-4M12 8h.01" />
+                      </svg>
+                      Guide d'installation
                     </Link>
 
                     <div className="my-2 border-t border-border-subtle" />
@@ -258,7 +329,7 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
               )}
 
               <p className="text-[11px] text-center text-text-muted">
-                LOYNIVA • Chaque visite compte.
+                LOYNIVA — Chaque visite compte.
               </p>
             </div>
           </aside>

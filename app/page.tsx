@@ -1,8 +1,8 @@
-﻿import LoynivaLogo from '@/components/LoynivaLogo'
+import LoynivaLogo from '@/components/LoynivaLogo'
 import Link from 'next/link'
 import { getClient } from '@/lib/auth'
 import ClientLandingNavbar from '@/components/ClientLandingNavbar'
-import ThemeToggle from '@/components/ThemeToggle'
+import InstallButton from '@/components/InstallButton'
 
 export default async function HomePage() {
   const client = await getClient()
@@ -38,7 +38,7 @@ export default async function HomePage() {
 
               <p className="mt-5 text-base text-text-muted sm:text-lg sm:leading-relaxed">
                 Fini les cartes en carton perdues ou oubliées au fond du portefeuille. 
-                Cumulez vos points en un clin d’œil chez vos commerçants préférés et débloquez des réductions et récompenses exclusives.
+                Cumulez vos points en un clin d'œil chez vos commerçants préférés et débloquez des réductions et récompenses exclusives.
               </p>
 
               {/* CTAs */}
@@ -53,9 +53,16 @@ export default async function HomePage() {
                   </svg>
                 </Link>
 
+                <InstallButton
+                  variant="outline"
+                  label="Installer l'application"
+                  showBadge={true}
+                  className="w-full sm:w-auto"
+                />
+
                 <Link
                   href="/join"
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-border-subtle bg-surface px-6 py-3.5 text-sm font-semibold text-foreground transition-all hover:border-[#4F9DCE] hover:bg-surface-muted sm:w-auto"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-border-subtle bg-surface px-5 py-3.5 text-sm font-semibold text-foreground transition-all hover:border-[#4F9DCE] hover:bg-surface-muted sm:w-auto"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
                     <path d="M3 7V5a2 2 0 0 1 2-2h2" />
@@ -64,7 +71,7 @@ export default async function HomePage() {
                     <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
                     <rect x="7" y="7" width="10" height="10" rx="1" />
                   </svg>
-                  <span>Scanner un QR Code</span>
+                  <span>Scanner QR</span>
                 </Link>
               </div>
 
@@ -74,19 +81,19 @@ export default async function HomePage() {
                   <svg className="h-4 w-4 text-[#16845B]" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>100% gratuit pour les clients</span>
+                  <span>100% gratuit</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <svg className="h-4 w-4 text-[#16845B]" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>Sans application à installer (PWA)</span>
+                  <span>Installable sur l'écran (PWA)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <svg className="h-4 w-4 text-[#16845B]" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>Respect de vos données personnelles</span>
+                  <span>Données sécurisées</span>
                 </div>
               </div>
             </div>
@@ -157,7 +164,7 @@ export default async function HomePage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
                         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#16845B] text-white font-bold text-sm">
-                          🥐
+                          🥖
                         </div>
                         <div>
                           <p className="font-display text-sm font-bold text-foreground">Boulangerie Saint-Honoré</p>
@@ -189,19 +196,33 @@ export default async function HomePage() {
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {/* Feature 1 */}
-            <div className="rounded-2xl border border-border-subtle bg-surface p-6 shadow-xs transition-all hover:border-[#4F9DCE] hover:shadow-md">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4F9DCE]/10 text-accent">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-                  <line x1="12" y1="18" x2="12.01" y2="18" />
-                </svg>
+            <div className="flex flex-col justify-between rounded-2xl border border-border-subtle bg-surface p-6 shadow-xs transition-all hover:border-[#4F9DCE] hover:shadow-md">
+              <div>
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#4F9DCE]/10 text-accent">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                    <line x1="12" y1="18" x2="12.01" y2="18" />
+                  </svg>
+                </div>
+                <h3 className="mt-4 font-display text-base font-bold text-foreground">
+                  Sans application à télécharger
+                </h3>
+                <p className="mt-2 text-sm text-text-muted leading-relaxed">
+                  Accessible directement depuis votre navigateur mobile. Vous pouvez l'ajouter sur votre écran d'accueil en un tap grâce à la technologie PWA.
+                </p>
               </div>
-              <h3 className="mt-4 font-display text-base font-bold text-foreground">
-                Sans application à télécharger
-              </h3>
-              <p className="mt-2 text-sm text-text-muted leading-relaxed">
-                Accessible directement depuis votre navigateur mobile. Vous pouvez l’ajouter sur votre écran d’accueil en un tap grâce à la technologie PWA.
-              </p>
+
+              <div className="mt-4 pt-3 border-t border-border-subtle/60 flex items-center gap-3">
+                <InstallButton
+                  variant="subtle"
+                  label="Installer sur l'écran"
+                  showBadge={false}
+                  className="py-1.5 px-3 text-xs font-semibold"
+                />
+                <Link href="/installer" className="text-xs font-medium text-accent hover:underline">
+                  Voir le guide →
+                </Link>
+              </div>
             </div>
 
             {/* Feature 2 */}
@@ -302,8 +323,20 @@ export default async function HomePage() {
                 </Link>
 
                 <Link
+                  href="/installer"
+                  className="w-full rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xs transition-colors hover:bg-white/20 sm:w-auto flex items-center justify-center gap-2"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  <span>Installer sur l'écran</span>
+                </Link>
+
+                <Link
                   href="/join"
-                  className="w-full rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xs transition-colors hover:bg-white/20 sm:w-auto"
+                  className="w-full rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xs transition-colors hover:bg-white/20 sm:w-auto"
                 >
                   Rejoindre un commerce
                 </Link>
@@ -321,12 +354,15 @@ export default async function HomePage() {
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <LoynivaLogo size="sm" showTagline={false} />
 
-            <div className="flex items-center gap-6 text-xs text-text-muted">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-text-muted">
               <Link href="/cards" className="hover:text-foreground transition-colors">
                 Mes cartes
               </Link>
               <Link href="/join" className="hover:text-foreground transition-colors">
                 Rejoindre
+              </Link>
+              <Link href="/installer" className="hover:text-foreground transition-colors font-medium text-accent">
+                Installer l'application
               </Link>
               <Link href="/login" className="hover:text-foreground transition-colors">
                 Connexion

@@ -1,20 +1,23 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import LoynivaLogo from './LoynivaLogo'
 import ThemeToggle from './ThemeToggle'
+import { useInstallPwa } from './InstallPwaContext'
 
-interface ClientNavbarProps {
+export default function ClientNavbar({
+  clientName,
+  cardCount,
+}: {
   clientName: string
   cardCount: number
-}
-
-export default function ClientNavbar({ clientName, cardCount }: ClientNavbarProps) {
+}) {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+  const { promptInstall, isStandalone, isInstalled } = useInstallPwa()
 
   const initials =
     clientName
@@ -93,7 +96,23 @@ export default function ClientNavbar({ clientName, cardCount }: ClientNavbarProp
           </Link>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Quick Install Button if not standalone */}
+          {!isStandalone && !isInstalled && (
+            <button
+              onClick={promptInstall}
+              title="Ajouter l'application sur votre écran"
+              className="flex items-center gap-1.5 rounded-xl border border-accent/30 bg-accent/10 px-2.5 py-1.5 text-xs font-bold text-accent transition-all hover:bg-accent/20 active:scale-95"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span className="hidden xs:inline">Installer</span>
+            </button>
+          )}
+
           <ThemeToggle />
 
           {/* User initials chip */}
@@ -181,6 +200,39 @@ export default function ClientNavbar({ clientName, cardCount }: ClientNavbarProp
                     </Link>
                   )
                 })}
+
+                {/* Install App Item */}
+                <button
+                  onClick={() => {
+                    setOpen(false)
+                    promptInstall()
+                  }}
+                  className="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-text-main transition-colors hover:bg-surface-muted hover:text-foreground"
+                >
+                  <span className="text-accent">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                  </span>
+                  <span>Installer sur l'écran</span>
+                  <span className="ml-auto rounded-md bg-accent/15 px-1.5 py-0.5 text-[10px] font-extrabold text-accent">PWA</span>
+                </button>
+
+                <Link
+                  href="/installer"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium text-text-muted transition-colors hover:bg-surface-muted hover:text-foreground"
+                >
+                  <span className="text-text-muted">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 16v-4M12 8h.01" />
+                    </svg>
+                  </span>
+                  <span>Guide d'installation</span>
+                </Link>
               </nav>
             </div>
 
@@ -202,7 +254,7 @@ export default function ClientNavbar({ clientName, cardCount }: ClientNavbarProp
               </button>
 
               <p className="text-[11px] text-center text-text-muted">
-                LOYNIVA • Chaque visite compte.
+                LOYNIVA — Chaque visite compte.
               </p>
             </div>
           </aside>

@@ -1,6 +1,7 @@
-﻿import Link from 'next/link'
+﻿import LoynivaLogo from '@/components/LoynivaLogo'
+import Link from 'next/link'
 import { getClient } from '@/lib/auth'
-import LoynivaLogo from '@/components/LoynivaLogo'
+import ClientLandingNavbar from '@/components/ClientLandingNavbar'
 import ThemeToggle from '@/components/ThemeToggle'
 
 export default async function HomePage() {
@@ -15,42 +16,7 @@ export default async function HomePage() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Navigation Bar */}
-        <header className="flex items-center justify-between py-5 sm:py-6">
-          <Link href="/" className="transition-opacity hover:opacity-90">
-            <LoynivaLogo size="md" showTagline={true} />
-          </Link>
-
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <ThemeToggle />
-
-            {client ? (
-              <Link
-                href="/cards"
-                className="flex items-center gap-2 rounded-xl bg-[#102A43] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1A3E61] dark:bg-[#4F9DCE] dark:text-[#091420] dark:hover:bg-[#69B0DC]"
-              >
-                <span>Mes cartes</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </Link>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="rounded-xl border border-border-subtle bg-surface px-3.5 py-2 text-xs font-semibold text-foreground transition-colors hover:border-[#4F9DCE] hover:text-[#4F9DCE] sm:px-4 sm:py-2.5 sm:text-sm"
-                >
-                  Connexion
-                </Link>
-                <Link
-                  href="/register"
-                  className="rounded-xl bg-[#102A43] px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#1A3E61] dark:bg-[#4F9DCE] dark:text-[#091420] dark:hover:bg-[#69B0DC] sm:px-4 sm:py-2.5 sm:text-sm"
-                >
-                  Créer un compte
-                </Link>
-              </>
-            )}
-          </div>
-        </header>
+        <ClientLandingNavbar client={client} />
 
         {/* Hero Section */}
         <section className="pt-8 pb-16 sm:pt-14 sm:pb-24">

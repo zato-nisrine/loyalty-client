@@ -5,7 +5,7 @@ import NotificationManager from "@/components/NotificationManager";
 import { ThemeProvider } from "@/lib/theme";
 
 export const metadata: Metadata = {
-  title: "LOYNIVA — Mes cartes de fidélité",
+  title: "LOYNIVA - Mes cartes de fidélité",
   description: "Vos cartes de fidélité, vos points et vos récompenses. Chaque visite compte.",
   manifest: "/manifest.json",
   appleWebApp: {
@@ -18,6 +18,9 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  interactiveWidget: "resizes-content",
   themeColor: "#102A43",
 };
 

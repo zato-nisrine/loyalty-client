@@ -25,7 +25,7 @@ function txLabel(tx: Transaction) {
   if (tx.type === 'credit') {
     return tx.amountFcfa ? `Achat ${tx.amountFcfa.toLocaleString()} FCFA` : 'Bonus'
   }
-  return 'Récompense échangée'
+  return 'Récompense'
 }
 
 export default async function CardsPage() {
@@ -60,7 +60,7 @@ export default async function CardsPage() {
           </p>
           <Link
             href="/join"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-600 to-orange-700 px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-medium text-white shadow-lg shadow-orange-500/30 hover:shadow-orange-500/40 transition-all duration-300 hover:scale-105"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#4F35E8] to-[#6366F1] px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-medium text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all duration-300 hover:scale-105"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M12 5v14M5 12h14" />
@@ -87,7 +87,7 @@ export default async function CardsPage() {
     .flatMap((txs: any[], i: number) =>
       txs.map((tx: any) => ({
         ...tx,
-        commerceName: cards[i].commerce?.name || cards[i].restaurant?.name || '',
+        commerceName: cards[i].commerce?.name || cards[i].restaurant?.name || 'Commerce',
       }))
     )
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -98,89 +98,86 @@ export default async function CardsPage() {
       {/* PWA Install Banner */}
       <InstallBanner />
 
-      <div className="pt-1 text-center">
-        <p className="mb-1.5 text-xs uppercase tracking-wide text-text-muted">Total de points</p>
-        <p className="font-[family-name:var(--font-display)] text-[42px] font-medium leading-none tracking-tight text-foreground">
-          {totalPoints.toLocaleString()}
-        </p>
-        <p className="mt-1 text-xs text-text-muted">sur toutes vos cartes</p>
-      </div>
-
-      <WalletStack cards={cards} clientName={client.name} />
-
-      <div className="grid grid-cols-3 gap-3">
-        <Link
-          href={`/cards/${cards[0].id}#code`}
-          className="flex flex-col items-center gap-2 rounded-2xl border border-border-subtle bg-surface-muted py-3.5 transition-colors hover:bg-surface-subtle"
-        >
-          <span className="flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: 'rgba(37,99,235,0.15)' }}>
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="1.8">
-              <rect x="3" y="3" width="7" height="7" rx="1.5" />
-              <rect x="14" y="3" width="7" height="7" rx="1.5" />
-              <rect x="3" y="14" width="7" height="7" rx="1.5" />
-              <rect x="14" y="14" width="7" height="7" rx="1.5" />
-            </svg>
-          </span>
-          <span className="text-xs text-text-muted">Saisir code</span>
-        </Link>
-
-        <Link
-          href={`/cards/${cards[0].id}#rewards`}
-          className="flex flex-col items-center gap-2 rounded-2xl border border-border-subtle bg-surface-muted py-3.5 transition-colors hover:bg-surface-subtle"
-        >
-          <span className="flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: 'rgba(249,115,22,0.15)' }}>
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="1.8">
-              <rect x="3" y="8" width="18" height="13" rx="2" />
-              <path d="M3 12h18M12 8v13" />
-              <path d="M12 8c-1.5 0-3-1-3-2.5S10.5 3 12 4c1.5-1 3-.5 3 1S13.5 8 12 8Z" />
-            </svg>
-          </span>
-          <span className="text-xs text-text-muted">Récompenses</span>
-        </Link>
-
+      {/* Header (Wallet / Portefeuille title matching reference photo) */}
+      <div className="flex items-center justify-between px-1 pt-1">
+        <div>
+          <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-tight text-foreground">
+            Portefeuille
+          </h1>
+          <p className="text-xs text-text-muted">
+            Mes cartes & transactions
+          </p>
+        </div>
         <Link
           href="/join"
-          className="flex flex-col items-center gap-2 rounded-2xl border border-border-subtle bg-surface-muted py-3.5 transition-colors hover:bg-surface-subtle"
+          aria-label="Rejoindre un nouveau commerce"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-border-subtle bg-surface text-foreground shadow-xs hover:bg-surface-muted transition-all active:scale-95"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: 'rgba(74,222,128,0.15)' }}>
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="1.8">
-              <path d="M12 5v14M5 12h14" strokeLinecap="round" />
-            </svg>
-          </span>
-          <span className="text-xs text-text-muted">Rejoindre</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+          </svg>
         </Link>
       </div>
 
+      {/* Physical Pocket Wallet & Card switcher */}
+      <WalletStack cards={cards} clientName={client.name} totalPoints={totalPoints} />
+
+      {/* Latest Transactions Section (Matching reference photo) */}
       {transactions.length > 0 && (
-        <div>
-          <p className="mb-3.5 text-xs font-medium uppercase tracking-wide text-text-muted">Historique récent</p>
-          <div className="flex flex-col">
-            {transactions.map((tx) => (
-              <div key={tx.id} className="flex items-center gap-3 border-b border-border-subtle py-3 last:border-0">
-                <span
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
-                  style={{ background: tx.type === 'credit' ? 'rgba(37,99,235,0.15)' : 'rgba(249,115,22,0.15)' }}
+        <div className="space-y-3 pt-2">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="font-[family-name:var(--font-display)] text-sm font-semibold tracking-tight text-foreground">
+              Dernières transactions
+            </h2>
+            <span className="text-xs text-text-muted">
+              {transactions.length} récentes
+            </span>
+          </div>
+
+          {/* Horizontal scroll cards (Exact layout from reference photo) */}
+          <div className="flex items-stretch gap-3 overflow-x-auto pb-2 pt-1 no-scrollbar scroll-smooth">
+            {transactions.map((tx) => {
+              const isCredit = tx.type === 'credit'
+              return (
+                <div
+                  key={tx.id}
+                  className="flex min-w-[140px] max-w-[170px] shrink-0 flex-col justify-between rounded-2xl border border-border-subtle bg-surface-muted/80 p-3.5 shadow-2xs hover:bg-surface-subtle transition-all"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={tx.type === 'credit' ? '#60a5fa' : '#f97316'} strokeWidth="1.8">
-                    {tx.type === 'credit' ? (
-                      <circle cx="12" cy="12" r="8" />
-                    ) : (
-                      <path d="M20 12V8H6a2 2 0 0 1 0-4h12v4M4 6v12a2 2 0 0 0 2 2h14v-4" />
-                    )}
-                  </svg>
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm text-foreground">{tx.commerceName}</p>
-                  <p className="mt-0.5 text-xs text-text-muted">
-                    {txLabel(tx)} • {formatRelative(tx.createdAt)}
-                  </p>
+                  <div className="space-y-2">
+                    {/* Merchant Avatar / Icon */}
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold shadow-2xs"
+                      style={{
+                        background: isCredit ? 'rgba(74, 222, 128, 0.15)' : 'rgba(249, 115, 22, 0.15)',
+                        color: isCredit ? '#16845B' : '#EA580C',
+                      }}
+                    >
+                      {tx.commerceName.charAt(0)}
+                    </div>
+
+                    <div>
+                      <p className="truncate text-xs font-semibold text-foreground">
+                        {tx.commerceName}
+                      </p>
+                      <p className="text-[10px] text-text-muted truncate mt-0.5">
+                        {txLabel(tx)} • {formatRelative(tx.createdAt)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 pt-2 border-t border-border-subtle/50">
+                    <p
+                      className={`font-semibold text-xs ${
+                        isCredit ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'
+                      }`}
+                    >
+                      {isCredit ? '+' : '-'}
+                      {Math.abs(tx.pointsDelta)} pts
+                    </p>
+                  </div>
                 </div>
-                <p className={`shrink-0 text-sm font-medium ${tx.type === 'credit' ? 'text-green-400' : 'text-red-400'}`}>
-                  {tx.type === 'credit' ? '+' : '-'}
-                  {Math.abs(tx.pointsDelta)} pts
-                </p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       )}

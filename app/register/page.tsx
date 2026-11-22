@@ -13,6 +13,7 @@ function RegisterContent() {
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [isPhoneValid, setIsPhoneValid] = useState(false)
   const [birthDate, setBirthDate] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -21,6 +22,12 @@ function RegisterContent() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+
+    if (!phone || !isPhoneValid) {
+      setError('Veuillez renseigner un numéro de téléphone valide avant de créer votre compte.')
+      return
+    }
+
     setLoading(true)
 
     const res = await fetch('/api/auth/register', {
@@ -78,8 +85,8 @@ function RegisterContent() {
           <PhoneInput
             value={phone}
             onChange={setPhone}
+            onValidityChange={setIsPhoneValid}
             required
-            error={error}
           />
 
           <div className="space-y-1.5">

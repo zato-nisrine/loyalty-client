@@ -263,8 +263,15 @@ export default function WalletStack({
                     <div className="relative z-10 flex h-full flex-col justify-between">
                       {/* Top Row: Pill Badge on Left, Brand on Right */}
                       <div className="flex items-center justify-between gap-3">
-                        {/* Pill Badge (Matching [Master card ∨] in reference photo) */}
-                        <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white/95 backdrop-blur-md border border-white/15 shadow-2xs max-w-[70%]">
+                        {/* Pill Badge with commerce name + logo icon */}
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white/95 backdrop-blur-md border border-white/15 shadow-2xs max-w-[65%]">
+                          {logoUrl && (
+                            <img
+                              src={logoUrl}
+                              alt=""
+                              className="h-4 w-4 rounded-full object-cover bg-white shrink-0 shadow-2xs"
+                            />
+                          )}
                           <span className="truncate">{commerceName}</span>
                           <svg
                             width="11"
@@ -279,18 +286,25 @@ export default function WalletStack({
                           </svg>
                         </div>
 
-                        {/* Brand Logo / Text (Matching Payzz. in reference photo) */}
+                        {/* Prominent Merchant Logo */}
                         <div className="shrink-0 flex items-center gap-1.5">
                           {logoUrl ? (
-                            <img
-                              src={logoUrl}
-                              alt={commerceName}
-                              className="h-8 w-8 rounded-xl object-cover bg-white/20 p-0.5 border border-white/25 shadow-2xs"
-                            />
+                            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-white p-1 shadow-md border border-white/30 flex items-center justify-center overflow-hidden">
+                              <img
+                                src={logoUrl}
+                                alt={commerceName}
+                                className="h-full w-full object-contain rounded-xl"
+                              />
+                            </div>
                           ) : (
-                            <span className="font-[family-name:var(--font-display)] text-sm sm:text-base font-bold text-white/90 tracking-tight">
-                              {commerceName ? `${commerceName}.` : 'Loyniva.'}
-                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 text-white font-bold text-xs shadow-xs border border-white/25">
+                                {commerceName ? commerceName.charAt(0).toUpperCase() : 'L'}
+                              </div>
+                              <span className="font-[family-name:var(--font-display)] text-sm sm:text-base font-bold text-white/90 tracking-tight hidden xs:inline">
+                                {commerceName ? `${commerceName}.` : 'Loyniva.'}
+                              </span>
+                            </div>
                           )}
                         </div>
                       </div>
@@ -523,23 +537,20 @@ export default function WalletStack({
                 className="flex flex-col items-center gap-1.5 shrink-0 transition-transform active:scale-95"
               >
                 <div
-                  className={`relative flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 ${
+                  className={`relative flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 overflow-hidden ${
                     isSelected
-                      ? 'ring-3 ring-[#4F35E8] ring-offset-2 ring-offset-background scale-105 shadow-md'
-                      : 'opacity-70 hover:opacity-100 hover:scale-102'
+                      ? 'ring-3 ring-[#4F35E8] ring-offset-2 ring-offset-background scale-105 shadow-md bg-white'
+                      : 'opacity-85 hover:opacity-100 hover:scale-102 bg-white border border-border-subtle shadow-2xs'
                   }`}
-                  style={{
-                    background: theme.bg,
-                  }}
                 >
                   {logoUrl ? (
                     <img
                       src={logoUrl}
                       alt={commerceName}
-                      className="h-full w-full rounded-full object-cover p-1"
+                      className="h-full w-full rounded-full object-contain p-1.5"
                     />
                   ) : (
-                    <span className="text-base font-bold text-white">
+                    <span className="text-base font-bold text-[#102A43] dark:text-[#4F9DCE]">
                       {commerceName.charAt(0)}
                     </span>
                   )}

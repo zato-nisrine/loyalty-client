@@ -11,6 +11,7 @@ type Transaction = {
   amountFcfa: number | null
   createdAt: string
   commerceName: string
+  commerceLogoUrl?: string | null
 }
 
 function formatRelative(dateStr: string) {
@@ -88,6 +89,7 @@ export default async function CardsPage() {
       txs.map((tx: any) => ({
         ...tx,
         commerceName: cards[i].commerce?.name || cards[i].restaurant?.name || 'Commerce',
+        commerceLogoUrl: cards[i].commerce?.logoUrl || cards[i].restaurant?.logoUrl,
       }))
     )
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -144,15 +146,25 @@ export default async function CardsPage() {
                   className="flex min-w-[140px] max-w-[170px] shrink-0 flex-col justify-between rounded-2xl border border-border-subtle bg-surface-muted/80 p-3.5 shadow-2xs hover:bg-surface-subtle transition-all"
                 >
                   <div className="space-y-2">
-                    {/* Merchant Avatar / Icon */}
+                    {/* Merchant Avatar / Icon / Logo */}
                     <div
-                      className="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold shadow-2xs"
+                      className="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold shadow-2xs overflow-hidden"
                       style={{
                         background: isCredit ? 'rgba(74, 222, 128, 0.15)' : 'rgba(249, 115, 22, 0.15)',
                         color: isCredit ? '#16845B' : '#EA580C',
                       }}
                     >
-                      {tx.commerceName.charAt(0)}
+                      {tx.commerceLogoUrl ? (
+                        <div className="h-full w-full bg-white p-1 flex items-center justify-center">
+                          <img
+                            src={tx.commerceLogoUrl}
+                            alt={tx.commerceName}
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                      ) : (
+                        tx.commerceName.charAt(0)
+                      )}
                     </div>
 
                     <div>

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 function formatExpDate(createdAt?: string) {
   if (!createdAt) return '08/28'
@@ -74,14 +74,21 @@ export default function LoyaltyCardVisual({
 
       {/* Card Content */}
       <div className="relative z-10 flex h-full flex-col justify-between">
-        {/* Top Row: Pill Badge on Left, Brand on Right */}
+        {/* Top Row: Pill Badge on Left, Merchant Logo/Brand on Right */}
         <div className="flex items-center justify-between gap-3">
-          {/* Pill Badge (Matching [Master card ∨] in reference photo) */}
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 hover:bg-white/20 px-3.5 py-1.5 text-xs font-semibold text-white/95 backdrop-blur-md border border-white/15 shadow-2xs transition-all max-w-[70%]">
+          {/* Pill Badge with commerce name + logo icon */}
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/15 hover:bg-white/20 px-3 py-1.5 text-xs font-semibold text-white/95 backdrop-blur-md border border-white/15 shadow-2xs transition-all max-w-[65%]">
+            {logoUrl && (
+              <img
+                src={logoUrl}
+                alt=""
+                className="h-4 w-4 rounded-full object-cover bg-white shrink-0 shadow-2xs"
+              />
+            )}
             <span className="truncate">{commerceName || 'Carte de fidélité'}</span>
             <svg
-              width="12"
-              height="12"
+              width="11"
+              height="11"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -92,18 +99,25 @@ export default function LoyaltyCardVisual({
             </svg>
           </div>
 
-          {/* Brand Logo / Text (Matching Payzz. in reference photo) */}
+          {/* Prominent Merchant Logo (Matching photo position with high contrast white frame) */}
           <div className="shrink-0 flex items-center gap-2">
             {logoUrl ? (
-              <img
-                src={logoUrl}
-                alt={commerceName}
-                className="h-8 w-8 rounded-xl object-cover bg-white/20 p-0.5 border border-white/25 shadow-2xs"
-              />
+              <div className="h-11 w-11 sm:h-12 sm:w-12 rounded-2xl bg-white p-1 shadow-md border border-white/30 flex items-center justify-center overflow-hidden">
+                <img
+                  src={logoUrl}
+                  alt={commerceName}
+                  className="h-full w-full object-contain rounded-xl"
+                />
+              </div>
             ) : (
-              <span className="font-[family-name:var(--font-display)] text-base sm:text-lg font-bold text-white/90 tracking-tight">
-                {commerceName ? `${commerceName}.` : 'Loyniva.'}
-              </span>
+              <div className="flex items-center gap-1.5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white font-bold text-sm shadow-xs border border-white/25">
+                  {commerceName ? commerceName.charAt(0).toUpperCase() : 'L'}
+                </div>
+                <span className="font-[family-name:var(--font-display)] text-base sm:text-lg font-bold text-white/90 tracking-tight hidden xs:inline">
+                  {commerceName ? `${commerceName}.` : 'Loyniva.'}
+                </span>
+              </div>
             )}
           </div>
         </div>

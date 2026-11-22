@@ -36,14 +36,14 @@ export default function RewardsList({
       return
     }
 
-    setMessage('Demande envoyÃ©e, prÃ©sentez-vous au commerce')
+    setMessage('Demande envoyée, présentez-vous au commerce')
     router.refresh()
   }
 
   if (rules.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-stone-300 bg-white p-6 text-center">
-        <p className="text-sm text-stone-500">Aucune rÃ©compense disponible pour le moment</p>
+        <p className="text-sm text-stone-500">Aucune récompense disponible pour le moment</p>
       </div>
     )
   }
@@ -51,7 +51,7 @@ export default function RewardsList({
   return (
     <div className="space-y-3">
       <h2 className="font-[family-name:var(--font-display)] text-base font-semibold text-stone-900">
-        RÃ©compenses disponibles
+        Récompenses disponibles
       </h2>
       {rules.map((rule) => {
         const canAfford = pointsBalance >= rule.pointsRequired
@@ -73,7 +73,7 @@ export default function RewardsList({
               className="rounded-full px-4 py-2 text-xs font-medium text-white disabled:opacity-30"
               style={{ backgroundColor: brandColor || '#102A43' }}
             >
-              {requesting === rule.id ? '...' : canAfford ? 'Ã‰changer' : 'Insuffisant'}
+              {requesting === rule.id ? '...' : canAfford ? 'Échanger' : 'Insuffisant'}
             </button>
           </div>
         )

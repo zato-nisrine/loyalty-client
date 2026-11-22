@@ -63,7 +63,7 @@ export default function CodeRedeemForm({ cardId, brandColor }: { cardId: string;
       {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
       {success && (
         <p className="mt-2 text-sm font-medium text-green-700">
-          +{success.pointsEarned} points crÃ©ditÃ©s !
+          +{success.pointsEarned} points crédités !
         </p>
       )}
     </div>

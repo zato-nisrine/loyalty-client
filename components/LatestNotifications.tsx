@@ -109,42 +109,47 @@ export default function LatestNotifications({
 
   return (
     <div className="space-y-3 pt-2">
-      {/* Header with Switcher Tabs */}
-      <div className="flex items-center justify-between px-1">
-        <div className="flex items-center gap-1.5 rounded-xl bg-surface-muted p-1 border border-border-subtle">
+      {/* Header with Compact Switcher Tabs (Anti-collision mobile) */}
+      <div className="flex items-center justify-between gap-2 px-1">
+        <div className="inline-flex items-center gap-1 rounded-xl bg-surface-muted p-1 border border-border-subtle shrink-0">
           <button
             onClick={() => setTab('notifications')}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-bold transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs transition-all ${
               tab === 'notifications'
-                ? 'bg-surface text-foreground shadow-xs'
-                : 'text-text-muted hover:text-foreground'
+                ? 'bg-surface text-foreground font-bold shadow-2xs'
+                : 'text-text-muted hover:text-foreground font-medium'
             }`}
           >
-            <span>Dernières notifications</span>
-            {unreadCount > 0 && (
+            <span>Notifications</span>
+            {unreadCount > 0 ? (
               <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#4F35E8] px-1 text-[10px] font-bold text-white">
                 {unreadCount}
               </span>
-            )}
+            ) : notifications.length > 0 ? (
+              <span className="text-[10px] text-text-muted">({notifications.length})</span>
+            ) : null}
           </button>
 
           {transactions.length > 0 && (
             <button
               onClick={() => setTab('transactions')}
-              className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
+              className={`flex items-center gap-1 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs transition-all ${
                 tab === 'transactions'
-                  ? 'bg-surface text-foreground shadow-xs'
-                  : 'text-text-muted hover:text-foreground'
+                  ? 'bg-surface text-foreground font-bold shadow-2xs'
+                  : 'text-text-muted hover:text-foreground font-medium'
               }`}
             >
-              Transactions
+              <span>Transactions</span>
+              <span className="text-[10px] text-text-muted">({transactions.length})</span>
             </button>
           )}
         </div>
 
-        <span className="text-[11px] text-text-muted">
+        <span className="text-[11px] text-text-muted truncate text-right">
           {tab === 'notifications'
-            ? `${notifications.length} message${notifications.length > 1 ? 's' : ''}`
+            ? unreadCount > 0
+              ? `${unreadCount} non lue${unreadCount > 1 ? 's' : ''}`
+              : 'À jour'
             : `${transactions.length} récentes`}
         </span>
       </div>
@@ -213,16 +218,16 @@ export default function LatestNotifications({
                   {/* Contenu de la notification */}
                   <div className="min-w-0 flex-1 pr-3">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-semibold text-xs text-foreground truncate">
+                      <span className="font-semibold text-xs text-foreground truncate max-w-[130px] sm:max-w-none">
                         {commerceName}
                       </span>
                       <span
-                        className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-bold ${config.bg} ${config.text}`}
+                        className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-bold ${config.bg} ${config.text} shrink-0`}
                       >
                         <span>{config.icon}</span>
                         <span>{config.label}</span>
                       </span>
-                      <span className="text-[10px] text-text-muted ml-auto">
+                      <span className="text-[10px] text-text-muted ml-auto shrink-0">
                         {formatRelative(notif.createdAt)}
                       </span>
                     </div>
@@ -306,3 +311,4 @@ export default function LatestNotifications({
     </div>
   )
 }
+

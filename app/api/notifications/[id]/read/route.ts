@@ -29,3 +29,4 @@ export async function PATCH(
     return NextResponse.json({ error: err?.message || 'Erreur réseau' }, { status: 500 })
   }
 }
+

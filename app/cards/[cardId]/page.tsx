@@ -32,12 +32,14 @@ export default async function CardDetailPage({ params }: { params: Promise<{ car
   const notifications = notificationsRes.ok ? await notificationsRes.json() : []
   return (
     <div className="space-y-6">
-      <div className="mx-auto max-w-[240px]">
+      <div className="mx-auto w-full max-w-sm sm:max-w-md">
         <LoyaltyCardVisual
-          commerceName={card.restaurant.name}
-          logoUrl={card.restaurant.logoUrl}
-          brandColor={card.restaurant.brandColor}
-          businessType={card.restaurant.businessType}
+          cardId={card.id}
+          createdAt={card.createdAt}
+          commerceName={card.restaurant?.name || card.commerce?.name || ''}
+          logoUrl={card.restaurant?.logoUrl || card.commerce?.logoUrl}
+          brandColor={card.restaurant?.brandColor || card.commerce?.brandColor}
+          businessType={card.restaurant?.businessType || card.commerce?.businessType}
           pointsBalance={card.pointsBalance}
           clientName={client.name}
         />

@@ -23,57 +23,57 @@ type Card = {
   }
 }
 
-// Preset luxury card gradient styles (Card 0 matches the lilac metallic card in the reference photo!)
+// Preset luxury card gradient styles (Theme 0 matches the Payzz deep indigo/navy card in the reference photo!)
 const CARD_THEMES = [
   {
-    // Lilac / Lavender Metallic (Exact match to reference photo!)
-    bg: 'linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 45%, #9333EA 100%)',
-    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%)',
+    // Payzz Deep Indigo / Navy (Exact match to reference photo!)
+    bg: 'linear-gradient(135deg, #1C1F4A 0%, #2A2E6D 50%, #44358E 100%)',
+    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%)',
     textColor: 'text-white',
-    subColor: 'text-purple-100',
+    subColor: 'text-indigo-100',
     chipColor: '#FDE047',
-    badgeBg: 'bg-white/25 text-white',
-    shadow: 'shadow-purple-500/20',
+    badgeBg: 'bg-white/20 text-white',
+    shadow: 'shadow-indigo-950/40',
   },
   {
     // Deep Ocean Sapphire
-    bg: 'linear-gradient(135deg, #93C5FD 0%, #3B82F6 45%, #1E3A8A 100%)',
-    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%)',
+    bg: 'linear-gradient(135deg, #1E293B 0%, #1D4ED8 50%, #1E40AF 100%)',
+    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%)',
     textColor: 'text-white',
     subColor: 'text-blue-100',
     chipColor: '#FDE047',
-    badgeBg: 'bg-white/25 text-white',
-    shadow: 'shadow-blue-500/20',
+    badgeBg: 'bg-white/20 text-white',
+    shadow: 'shadow-blue-900/30',
   },
   {
     // Emerald Luxury
-    bg: 'linear-gradient(135deg, #A7F3D0 0%, #10B981 45%, #064E3B 100%)',
-    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%)',
+    bg: 'linear-gradient(135deg, #064E3B 0%, #059669 50%, #047857 100%)',
+    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%)',
     textColor: 'text-white',
     subColor: 'text-emerald-100',
     chipColor: '#FDE047',
-    badgeBg: 'bg-white/25 text-white',
-    shadow: 'shadow-emerald-500/20',
+    badgeBg: 'bg-white/20 text-white',
+    shadow: 'shadow-emerald-950/30',
   },
   {
     // Sunset Coral
-    bg: 'linear-gradient(135deg, #FED7AA 0%, #F97316 45%, #9A3412 100%)',
-    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%)',
+    bg: 'linear-gradient(135deg, #7C2D12 0%, #EA580C 50%, #C2410C 100%)',
+    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%)',
     textColor: 'text-white',
     subColor: 'text-orange-100',
     chipColor: '#FDE047',
-    badgeBg: 'bg-white/25 text-white',
-    shadow: 'shadow-orange-500/20',
+    badgeBg: 'bg-white/20 text-white',
+    shadow: 'shadow-orange-950/30',
   },
   {
     // Platinum Titanium
-    bg: 'linear-gradient(135deg, #CBD5E1 0%, #64748B 45%, #0F172A 100%)',
-    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%)',
+    bg: 'linear-gradient(135deg, #0F172A 0%, #334155 50%, #1E293B 100%)',
+    overlay: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%)',
     textColor: 'text-white',
     subColor: 'text-slate-200',
     chipColor: '#FDE047',
-    badgeBg: 'bg-white/25 text-white',
-    shadow: 'shadow-slate-500/20',
+    badgeBg: 'bg-white/20 text-white',
+    shadow: 'shadow-slate-900/30',
   },
 ]
 
@@ -247,73 +247,91 @@ export default function WalletStack({
                       }}
                     />
 
+                    {/* Geometric Fold / Polygon Watermark Graphic (Matching reference photo) */}
+                    <svg
+                      viewBox="0 0 200 200"
+                      className="pointer-events-none absolute -right-2 top-1/2 -translate-y-1/2 h-44 w-44 opacity-15"
+                      fill="none"
+                    >
+                      <polygon points="100,20 180,65 180,145 100,100" fill="white" opacity="0.4" />
+                      <polygon points="100,20 20,65 100,100" fill="white" opacity="0.2" />
+                      <polygon points="100,100 180,145 100,190" fill="white" opacity="0.5" />
+                      <polygon points="20,65 100,100 100,190 20,135" fill="white" opacity="0.3" />
+                    </svg>
+
                     {/* Card Content (Top ~60% visible above pocket mouth) */}
                     <div className="relative z-10 flex h-full flex-col justify-between">
-                      {/* Top Row: Name on Left, Logo/Brand on Right */}
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0 flex-1">
-                          <p className="font-[family-name:var(--font-display)] text-base sm:text-lg font-bold tracking-tight text-white drop-shadow-sm truncate">
-                            {commerceName}
-                          </p>
-                          <p className="font-mono text-[11px] tracking-widest text-white/80 mt-0.5">
-                            •••• •••• •••• {card.id.slice(-4)}
-                          </p>
+                      {/* Top Row: Pill Badge on Left, Brand on Right */}
+                      <div className="flex items-center justify-between gap-3">
+                        {/* Pill Badge (Matching [Master card ∨] in reference photo) */}
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white/95 backdrop-blur-md border border-white/15 shadow-2xs max-w-[70%]">
+                          <span className="truncate">{commerceName}</span>
+                          <svg
+                            width="11"
+                            height="11"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            className="shrink-0 opacity-80"
+                          >
+                            <path d="m6 9 6 6 6-6" />
+                          </svg>
                         </div>
 
-                        {/* Logo or Loyalty Badge */}
+                        {/* Brand Logo / Text (Matching Payzz. in reference photo) */}
                         <div className="shrink-0 flex items-center gap-1.5">
                           {logoUrl ? (
                             <img
                               src={logoUrl}
                               alt={commerceName}
-                              className="h-9 w-9 rounded-xl object-cover bg-white/20 p-0.5 shadow-sm border border-white/30"
+                              className="h-8 w-8 rounded-xl object-cover bg-white/20 p-0.5 border border-white/25 shadow-2xs"
                             />
                           ) : (
-                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 font-bold text-white shadow-sm border border-white/30 text-sm">
-                              {commerceName.charAt(0)}
-                            </div>
+                            <span className="font-[family-name:var(--font-display)] text-sm sm:text-base font-bold text-white/90 tracking-tight">
+                              {commerceName ? `${commerceName}.` : 'Loyniva.'}
+                            </span>
                           )}
                         </div>
                       </div>
 
-                      {/* Middle Row: Gold Chip & Contactless Wave + Points */}
-                      <div className="flex items-center justify-between pt-1">
-                        {/* EMV Gold Chip Icon */}
-                        <div className="flex items-center gap-2">
-                          <div className="relative h-6 w-8 rounded-md bg-gradient-to-tr from-amber-300 via-amber-200 to-yellow-400 p-0.5 shadow-xs border border-amber-400/60">
-                            <div className="h-full w-full rounded-xs border border-amber-500/40 grid grid-cols-2 gap-0.5 opacity-60">
-                              <div className="border-r border-amber-600/30" />
-                              <div />
-                            </div>
-                          </div>
-                          {/* NFC Wave */}
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="opacity-75">
-                            <path d="M4 10a12 12 0 0 1 16 0" />
-                            <path d="M7 14a8 8 0 0 1 10 0" />
-                            <path d="M10 18a4 4 0 0 1 4 0" />
-                          </svg>
-                        </div>
-
-                        {/* Status / Points Badge */}
-                        <div className="rounded-full bg-black/20 px-2.5 py-0.5 text-[11px] font-semibold text-white/95 backdrop-blur-xs border border-white/15">
-                          {card.pointsBalance.toLocaleString()} pts
-                        </div>
-                      </div>
-
-                      {/* Bottom Row: Titulaire & Action */}
-                      <div className="flex items-end justify-between pt-2 border-t border-white/15 text-[10px]">
+                      {/* Bottom Row: Current Balance on Left, Exp & Card on Right */}
+                      <div className="flex items-end justify-between gap-3 pt-2">
+                        {/* Left: Solde actuel */}
                         <div>
-                          <p className="text-white/70 uppercase tracking-wider text-[9px]">Titulaire</p>
-                          <p className="font-semibold text-white tracking-wide truncate max-w-[160px]">
+                          <p className="text-[10px] font-medium uppercase tracking-wider text-white/70">
+                            Solde actuel
+                          </p>
+                          <div className="mt-0.5 flex items-baseline gap-1">
+                            <span className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">
+                              {card.pointsBalance.toLocaleString()}
+                            </span>
+                            <span className="text-xs font-bold text-white/80">pts</span>
+                          </div>
+                          <p className="text-[9px] text-white/60 font-medium tracking-wide truncate max-w-[140px] mt-0.5">
                             {clientName.toUpperCase()}
                           </p>
                         </div>
-                        <span className="text-white/80 font-medium underline underline-offset-2 flex items-center gap-1">
-                          Voir détails
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                          </svg>
-                        </span>
+
+                        {/* Right: Exp. & Card */}
+                        <div className="flex items-center gap-3 text-right shrink-0">
+                          <div>
+                            <p className="text-[9px] font-medium uppercase tracking-wider text-white/60">
+                              Exp.
+                            </p>
+                            <p className="text-xs font-semibold text-white font-mono">
+                              08/28
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-[9px] font-medium uppercase tracking-wider text-white/60">
+                              Card
+                            </p>
+                            <p className="text-xs font-semibold text-white font-mono tracking-wider">
+                              {card.id ? `${card.id.slice(0, 4)}****` : '5679****'}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

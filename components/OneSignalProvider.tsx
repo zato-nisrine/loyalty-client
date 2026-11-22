@@ -133,6 +133,15 @@ export default function OneSignalProvider({ children }: { children?: React.React
             setPermission(newPerm)
             setIsSubscribed(isPermitted)
           })
+
+          // Redirection vers la bonne carte / page lors d'un clic sur la notification
+          OneSignal.Notifications.addEventListener('click', (event: any) => {
+            const data = event.notification?.additionalData || {}
+            const url = data.url || (data.cardId ? `/cards/${data.cardId}` : '/cards')
+            if (url && typeof window !== 'undefined') {
+              window.location.href = url
+            }
+          })
         }
       } catch (error) {
         console.warn('Erreur initialisation OneSignal:', error)

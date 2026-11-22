@@ -4,31 +4,7 @@ import Link from 'next/link'
 import WalletStack from '@/components/WalletStack'
 import InstallBanner from '@/components/InstallBanner'
 import NotificationBanner from '@/components/NotificationBanner'
-
-type Transaction = {
-  id: string
-  type: 'credit' | 'debit'
-  pointsDelta: number
-  amountFcfa: number | null
-  createdAt: string
-  commerceName: string
-  commerceLogoUrl?: string | null
-}
-
-function formatRelative(dateStr: string) {
-  const date = new Date(dateStr)
-  const diffDays = Math.floor((Date.now() - date.getTime()) / 86400000)
-  if (diffDays <= 0) return "Aujourd'hui"
-  if (diffDays === 1) return 'Hier'
-  return `Il y a ${diffDays} j`
-}
-
-function txLabel(tx: Transaction) {
-  if (tx.type === 'credit') {
-    return tx.amountFcfa ? `Achat ${tx.amountFcfa.toLocaleString()} FCFA` : 'Bonus'
-  }
-  return 'Récompense'
-}
+import LatestNotifications, { ClientTransaction } from '@/components/LatestNotifications'
 
 export default async function CardsPage() {
   const client = await getClient()
@@ -77,16 +53,24 @@ export default async function CardsPage() {
 
   const totalPoints = cards.reduce((sum: number, c: any) => sum + (c.pointsBalance || 0), 0)
 
-  const txResults = await Promise.all(
-    cards.map((c: any) =>
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/clients/me/cards/${c.id}/transactions`, {
-        headers: { Authorization: `Bearer ${token}` },
-        cache: 'no-store',
-      }).then((r) => (r.ok ? r.json() : []))
-    )
-  )
+  const [notifRes, txResults] = await Promise.all([
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/clients/me/notifications`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store',
+    }).catch(() => null),
+    Promise.all(
+      cards.map((c: any) =>
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/clients/me/cards/${c.id}/transactions`, {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: 'no-store',
+        }).then((r) => (r.ok ? r.json() : []))
+      )
+    ),
+  ])
 
-  const transactions: Transaction[] = txResults
+  const notifications = notifRes && notifRes.ok ? await notifRes.json() : []
+
+  const transactions: ClientTransaction[] = txResults
     .flatMap((txs: any[], i: number) =>
       txs.map((tx: any) => ({
         ...tx,
@@ -95,7 +79,7 @@ export default async function CardsPage() {
       }))
     )
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 6)
+    .slice(0, 10)
 
   return (
     <div className="space-y-6">
@@ -112,7 +96,7 @@ export default async function CardsPage() {
             Portefeuille
           </h1>
           <p className="text-xs text-text-muted">
-            Mes cartes & transactions
+            Mes cartes & notifications
           </p>
         </div>
         <Link
@@ -129,75 +113,11 @@ export default async function CardsPage() {
       {/* Physical Pocket Wallet & Card switcher */}
       <WalletStack cards={cards} clientName={client.name} totalPoints={totalPoints} />
 
-      {/* Latest Transactions Section (Matching reference photo) */}
-      {transactions.length > 0 && (
-        <div className="space-y-3 pt-2">
-          <div className="flex items-center justify-between px-1">
-            <h2 className="font-[family-name:var(--font-display)] text-sm font-semibold tracking-tight text-foreground">
-              Dernières transactions
-            </h2>
-            <span className="text-xs text-text-muted">
-              {transactions.length} récentes
-            </span>
-          </div>
-
-          {/* Horizontal scroll cards (Exact layout from reference photo) */}
-          <div className="flex items-stretch gap-3 overflow-x-auto pb-2 pt-1 no-scrollbar scroll-smooth">
-            {transactions.map((tx) => {
-              const isCredit = tx.type === 'credit'
-              return (
-                <div
-                  key={tx.id}
-                  className="flex min-w-[140px] max-w-[170px] shrink-0 flex-col justify-between rounded-2xl border border-border-subtle bg-surface-muted/80 p-3.5 shadow-2xs hover:bg-surface-subtle transition-all"
-                >
-                  <div className="space-y-2">
-                    {/* Merchant Avatar / Icon / Logo */}
-                    <div
-                      className="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold shadow-2xs overflow-hidden"
-                      style={{
-                        background: isCredit ? 'rgba(74, 222, 128, 0.15)' : 'rgba(249, 115, 22, 0.15)',
-                        color: isCredit ? '#16845B' : '#EA580C',
-                      }}
-                    >
-                      {tx.commerceLogoUrl ? (
-                        <div className="h-full w-full bg-white p-1 flex items-center justify-center">
-                          <img
-                            src={tx.commerceLogoUrl}
-                            alt={tx.commerceName}
-                            className="h-full w-full object-contain"
-                          />
-                        </div>
-                      ) : (
-                        tx.commerceName.charAt(0)
-                      )}
-                    </div>
-
-                    <div>
-                      <p className="truncate text-xs font-semibold text-foreground">
-                        {tx.commerceName}
-                      </p>
-                      <p className="text-[10px] text-text-muted truncate mt-0.5">
-                        {txLabel(tx)} • {formatRelative(tx.createdAt)}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 pt-2 border-t border-border-subtle/50">
-                    <p
-                      className={`font-semibold text-xs ${
-                        isCredit ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'
-                      }`}
-                    >
-                      {isCredit ? '+' : '-'}
-                      {Math.abs(tx.pointsDelta)} pts
-                    </p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      {/* Latest Notifications (Annonces, Offres, etc.) & Transactions */}
+      <LatestNotifications
+        initialNotifications={notifications}
+        transactions={transactions}
+      />
     </div>
   )
 }

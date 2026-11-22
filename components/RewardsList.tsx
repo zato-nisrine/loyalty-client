@@ -37,6 +37,27 @@ export default function RewardsList({
     }
 
     setMessage('Demande envoyée, présentez-vous au commerce')
+
+    try {
+      if (
+        'serviceWorker' in navigator &&
+        typeof Notification !== 'undefined' &&
+        Notification.permission === 'granted'
+      ) {
+        const reg = await navigator.serviceWorker.ready
+        if (reg && reg.showNotification) {
+          const rule = rules.find((r) => r.id === ruleId)
+          await reg.showNotification('LOYNIVA — Demande envoyée ! 🎁', {
+            body: `Votre demande pour "${rule?.name || 'Récompense'}" a bien été transmise au commerçant.`,
+            icon: '/icons/icon-192.png',
+            badge: '/icons/icon-192.png',
+          })
+        }
+      }
+    } catch (e) {
+      // Ignorer
+    }
+
     router.refresh()
   }
 

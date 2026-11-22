@@ -94,7 +94,11 @@ export default function LatestNotifications({
   const [notifications, setNotifications] = useState(initialNotifications)
   const [tab, setTab] = useState<'notifications' | 'transactions'>('notifications')
 
-  const unreadCount = notifications.filter((n) => !n.isRead).length
+  // Limite stricte aux 5 dernières notifications et 5 dernières transactions
+  const visibleNotifications = notifications.slice(0, 5)
+  const visibleTransactions = transactions.slice(0, 5)
+
+  const unreadCount = visibleNotifications.filter((n) => !n.isRead).length
 
   const handleMarkRead = async (id: string) => {
     setNotifications((prev) =>
@@ -125,12 +129,12 @@ export default function LatestNotifications({
               <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#4F35E8] px-1 text-[10px] font-bold text-white">
                 {unreadCount}
               </span>
-            ) : notifications.length > 0 ? (
-              <span className="text-[10px] text-text-muted">({notifications.length})</span>
+            ) : visibleNotifications.length > 0 ? (
+              <span className="text-[10px] text-text-muted">({visibleNotifications.length})</span>
             ) : null}
           </button>
 
-          {transactions.length > 0 && (
+          {visibleTransactions.length > 0 && (
             <button
               onClick={() => setTab('transactions')}
               className={`flex items-center gap-1 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs transition-all ${
@@ -140,7 +144,7 @@ export default function LatestNotifications({
               }`}
             >
               <span>Transactions</span>
-              <span className="text-[10px] text-text-muted">({transactions.length})</span>
+              <span className="text-[10px] text-text-muted">({visibleTransactions.length})</span>
             </button>
           )}
         </div>
@@ -150,14 +154,14 @@ export default function LatestNotifications({
             ? unreadCount > 0
               ? `${unreadCount} non lue${unreadCount > 1 ? 's' : ''}`
               : 'À jour'
-            : `${transactions.length} récentes`}
+            : `${visibleTransactions.length} récentes`}
         </span>
       </div>
 
       {/* 1. Notifications & Messages d'annonces */}
       {tab === 'notifications' && (
         <div className="space-y-2.5">
-          {notifications.length === 0 ? (
+          {visibleNotifications.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-border-subtle bg-surface-muted/40 p-6 text-center">
               <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-surface-muted text-text-muted">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -173,7 +177,7 @@ export default function LatestNotifications({
               </p>
             </div>
           ) : (
-            notifications.map((notif) => {
+            visibleNotifications.map((notif) => {
               const commerce = notif.loyaltyCard?.restaurant
               const commerceName = commerce?.name || 'Votre commerce'
               const logoUrl = commerce?.logoUrl
@@ -255,7 +259,7 @@ export default function LatestNotifications({
       {/* 2. Transactions horizontales */}
       {tab === 'transactions' && (
         <div className="flex items-stretch gap-3 overflow-x-auto pb-2 pt-1 no-scrollbar scroll-smooth">
-          {transactions.map((tx) => {
+          {visibleTransactions.map((tx) => {
             const isCredit = tx.type === 'credit'
             return (
               <div

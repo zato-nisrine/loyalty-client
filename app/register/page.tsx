@@ -26,7 +26,7 @@ function RegisterContent() {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone, birthDate, password }),
+      body: JSON.stringify({ name: name.trim(), pseudo: name.trim(), phone, birthDate, password }),
     })
 
     setLoading(false)
@@ -59,16 +59,20 @@ function RegisterContent() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-xs font-semibold uppercase tracking-wider text-[#243746] dark:text-[#D8E0E8]">
-              Votre prénom ou pseudo
+              Votre pseudo
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              autoComplete="username"
               placeholder="Ex : Sarah ou Alexandre"
               className="w-full rounded-xl border border-[#D8E0E8] bg-[#F5F8FC] px-3.5 py-2.5 text-sm text-[#243746] outline-none transition-all focus:border-[#4F9DCE] focus:bg-white focus:ring-2 focus:ring-[#4F9DCE]/20 dark:border-white/10 dark:bg-[#173859] dark:text-white"
             />
+            <p className="text-[11px] text-[#5B7286] dark:text-[#8FA6BA]">
+              Ce pseudo unique vous servira à vous connecter à votre compte
+            </p>
           </div>
 
           <PhoneInput

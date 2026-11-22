@@ -166,56 +166,63 @@ export default function OneSignalProvider({ children }: { children?: React.React
   // 5. Demande d'autorisation déclenchée par une action utilisateur (obligatoire sur iOS)
   const requestPermission = useCallback(async (): Promise<boolean> => {
     if (typeof window === 'undefined') return false
-    if (!('Notification' in window)) {
+    if (!('Notification' in window) || !('serviceWorker' in navigator)) {
       setPermission('unsupported')
+      return false
+    }
+
+    if (Notification.permission === 'denied') {
+      setPermission('denied')
       return false
     }
 
     setIsLoading(true)
     try {
-      return await new Promise<boolean>((resolve) => {
+      // Appel natif direct immédiat pour préserver le geste utilisateur
+      const nativePerm = await Notification.requestPermission()
+      const newPerm = nativePerm as NotificationPermissionState
+      setPermission(newPerm)
+      const isPermitted = newPerm === 'granted'
+      setIsSubscribed(isPermitted)
+
+      if (isPermitted) {
         window.OneSignalDeferred = window.OneSignalDeferred || []
         window.OneSignalDeferred.push(async function (OneSignal: any) {
           try {
-            await OneSignal.Notifications.requestPermission()
-            const isPermitted = Notification.permission === 'granted'
-            setPermission(Notification.permission as NotificationPermissionState)
-            setIsSubscribed(isPermitted)
-
-            if (isPermitted) {
-              if (clientId) {
-                await OneSignal.login(clientId)
-              }
-
-              // Déclencher une notification locale de bienvenue immédiate
-              try {
-                if ('serviceWorker' in navigator) {
-                  const reg = await navigator.serviceWorker.ready
-                  if (reg && reg.showNotification) {
-                    await reg.showNotification('LOYNIVA 🎉', {
-                      body: 'Notifications activées ! Vous recevrez vos points et récompenses en direct.',
-                      icon: '/icons/icon-192.png',
-                      badge: '/icons/icon-192.png',
-                    })
-                  }
-                }
-              } catch (swErr) {
-                console.warn('Notification SW de bienvenue non supportée:', swErr)
-              }
+            if (OneSignal.Notifications && OneSignal.Notifications.requestPermission) {
+              await OneSignal.Notifications.requestPermission()
             }
-            resolve(isPermitted)
-          } catch (err) {
-            console.error('Erreur demande permission OneSignal:', err)
-            resolve(false)
-          } finally {
-            setIsLoading(false)
+            if (clientId) {
+              await OneSignal.login(clientId)
+            }
+          } catch (e) {
+            console.warn('OneSignal sync warning:', e)
           }
         })
-      })
+
+        // Déclencher une notification locale de bienvenue immédiate
+        try {
+          if ('serviceWorker' in navigator) {
+            const reg = await navigator.serviceWorker.ready
+            if (reg && reg.showNotification) {
+              await reg.showNotification('LOYNIVA 🎉', {
+                body: 'Notifications activées ! Vous recevrez vos points et récompenses en direct.',
+                icon: '/icons/icon-192.png',
+                badge: '/icons/icon-192.png',
+              })
+            }
+          }
+        } catch (swErr) {
+          console.warn('Notification SW de bienvenue non supportée:', swErr)
+        }
+      }
+
+      return isPermitted
     } catch (e) {
       console.error('Erreur générale requestPermission:', e)
-      setIsLoading(false)
       return false
+    } finally {
+      setIsLoading(false)
     }
   }, [clientId])
 

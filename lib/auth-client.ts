@@ -5,15 +5,13 @@ export function getClientToken() {
 }
 
 export async function getClient() {
-  const token = getClientToken()
-  if (!token) return null
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clients/me`, {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: 'no-store',
-  })
-
-  if (!res.ok) return null
-
-  return res.json()
+  try {
+    const res = await fetch('/api/auth/me', { cache: 'no-store' })
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.authenticated ? data.client : null
+  } catch (error) {
+    console.error('Erreur getClient:', error)
+    return null
+  }
 }

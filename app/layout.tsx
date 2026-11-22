@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import NotificationManager from "@/components/NotificationManager";
+import OneSignalProvider from "@/components/OneSignalProvider";
 import { ThemeProvider } from "@/lib/theme";
 import { InstallPwaProvider } from "@/components/InstallPwaContext";
 import InstallModal from "@/components/InstallModal";
@@ -46,10 +47,12 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <ThemeProvider>
           <InstallPwaProvider>
-            {children}
-            <InstallModal />
-            <ServiceWorkerRegister />
-            <NotificationManager />
+            <OneSignalProvider>
+              {children}
+              <InstallModal />
+              <ServiceWorkerRegister />
+              <NotificationManager />
+            </OneSignalProvider>
           </InstallPwaProvider>
         </ThemeProvider>
       </body>

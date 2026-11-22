@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import WalletStack from '@/components/WalletStack'
 import InstallBanner from '@/components/InstallBanner'
+import NotificationBanner from '@/components/NotificationBanner'
 
 type Transaction = {
   id: string
@@ -44,6 +45,7 @@ export default async function CardsPage() {
     return (
       <div className="space-y-4 mt-2">
         <InstallBanner />
+        <NotificationBanner />
         <div className="rounded-3xl border-2 border-dashed border-border-subtle bg-surface p-8 sm:p-12 text-center shadow-sm">
           <div className="mb-6 flex justify-center">
             <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-surface-muted flex items-center justify-center">
@@ -99,6 +101,9 @@ export default async function CardsPage() {
     <div className="space-y-6">
       {/* PWA Install Banner */}
       <InstallBanner />
+
+      {/* Push Notification Banner */}
+      <NotificationBanner />
 
       {/* Header (Wallet / Portefeuille title matching reference photo) */}
       <div className="flex items-center justify-between px-1 pt-1">

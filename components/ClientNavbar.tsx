@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import LoynivaLogo from './LoynivaLogo'
 import ThemeToggle from './ThemeToggle'
 import { useInstallPwa } from './InstallPwaContext'
+import { useNotification } from './OneSignalProvider'
 
 export default function ClientNavbar({
   clientName,
@@ -17,7 +18,20 @@ export default function ClientNavbar({
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
-  const { promptInstall, isStandalone, isInstalled } = useInstallPwa()
+  const { promptInstall, isStandalone, isInstalled, platform } = useInstallPwa()
+  const { permission, requestPermission, sendTestNotification, isTesting, isLoading } = useNotification()
+  const [testMessage, setTestMessage] = useState<string | null>(null)
+
+  const handleTestNotification = async () => {
+    setTestMessage('Envoi du test...')
+    const res = await sendTestNotification()
+    if (res.success) {
+      setTestMessage('Notification envoyée ! 📲')
+    } else {
+      setTestMessage(res.message || 'Échec du test')
+    }
+    setTimeout(() => setTestMessage(null), 3500)
+  }
 
   const initials =
     clientName
@@ -234,6 +248,66 @@ export default function ClientNavbar({
                   <span>Guide d'installation</span>
                 </Link>
               </nav>
+
+              {/* Notifications Status & Action */}
+              <div className="mt-4 rounded-xl border border-border-subtle bg-surface-muted p-3">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-500 dark:text-indigo-400">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                      </svg>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold text-foreground truncate">Notifications</p>
+                      <p className="text-[10px] text-text-muted truncate">
+                        {permission === 'granted'
+                          ? 'Activées sur ce mobile'
+                          : permission === 'denied'
+                          ? 'Bloquées'
+                          : platform === 'ios' && !isStandalone
+                          ? 'Requièrent la PWA'
+                          : 'Non activées'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {permission === 'granted' ? (
+                    <button
+                      onClick={handleTestNotification}
+                      disabled={isTesting}
+                      className="rounded-lg bg-surface border border-border-subtle px-2.5 py-1 text-[11px] font-semibold text-foreground hover:bg-surface-subtle transition-all active:scale-95 disabled:opacity-50 shrink-0"
+                    >
+                      {isTesting ? 'Test...' : 'Tester'}
+                    </button>
+                  ) : platform === 'ios' && !isStandalone ? (
+                    <button
+                      onClick={() => {
+                        setOpen(false)
+                        promptInstall()
+                      }}
+                      className="rounded-lg bg-indigo-600 px-2.5 py-1 text-[11px] font-semibold text-white shadow-2xs hover:bg-indigo-700 transition-all active:scale-95 shrink-0"
+                    >
+                      Installer
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => requestPermission()}
+                      disabled={isLoading}
+                      className="rounded-lg bg-indigo-600 px-2.5 py-1 text-[11px] font-semibold text-white shadow-2xs hover:bg-indigo-700 transition-all active:scale-95 disabled:opacity-50 shrink-0"
+                    >
+                      {isLoading ? '...' : 'Activer'}
+                    </button>
+                  )}
+                </div>
+
+                {testMessage && (
+                  <p className="mt-2 text-[10px] text-center font-medium text-indigo-500">
+                    {testMessage}
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Bottom Actions & Footer */}

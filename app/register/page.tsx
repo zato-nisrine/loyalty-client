@@ -148,7 +148,7 @@ function RegisterContent() {
       </div>
 
       <p className="mt-6 text-center text-xs text-[#5B7286] dark:text-[#8FA6BA]">
-        LOYNIVA • « Chaque visite compte. »
+        Fidelity • « Chaque visite compte. »
       </p>
     </div>
   )

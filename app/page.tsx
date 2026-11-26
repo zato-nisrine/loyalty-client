@@ -187,7 +187,7 @@ export default async function HomePage() {
         <section className="border-t border-border-subtle py-16 sm:py-20">
           <div className="text-center">
             <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              Pourquoi choisir LOYNIVA pour vos sorties ?
+              Pourquoi choisir Fidelity pour vos sorties ?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-text-muted sm:text-base">
               Conçu pour vous offrir une expérience fluide, sans friction et réellement avantageuse chez tous vos commerces de proximité.
@@ -277,7 +277,7 @@ export default async function HomePage() {
               </div>
               <h3 className="mt-4 font-display text-base font-bold text-foreground">Scannez le QR Code</h3>
               <p className="mt-2 text-sm text-text-muted">
-                Au comptoir ou sur la table de votre commerce, scannez le QR code LOYNIVA pour ajouter sa carte à votre profil en 2 secondes.
+                Au comptoir ou sur la table de votre commerce, scannez le QR code Fidelity pour ajouter sa carte à votre profil en 2 secondes.
               </p>
             </div>
 
@@ -373,7 +373,7 @@ export default async function HomePage() {
             </div>
 
             <p className="text-xs text-text-muted">
-              © {new Date().getFullYear()} LOYNIVA. Chaque visite compte.
+              © {new Date().getFullYear()} Fidelity. Chaque visite compte.
             </p>
           </div>
         </footer>

@@ -115,7 +115,7 @@ export default function LoyaltyCardVisual({
                   {commerceName ? commerceName.charAt(0).toUpperCase() : 'L'}
                 </div>
                 <span className="font-[family-name:var(--font-display)] text-base sm:text-lg font-bold text-white/90 tracking-tight hidden xs:inline">
-                  {commerceName ? `${commerceName}.` : 'Loyniva.'}
+                  {commerceName ? `${commerceName}.` : 'Fidelity.'}
                 </span>
               </div>
             )}

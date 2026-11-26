@@ -205,7 +205,7 @@ export default function OneSignalProvider({ children }: { children?: React.React
           if ('serviceWorker' in navigator) {
             const reg = await navigator.serviceWorker.ready
             if (reg && reg.showNotification) {
-              await reg.showNotification('LOYNIVA 🎉', {
+              await reg.showNotification('Fidelity 🎉', {
                 body: 'Notifications activées ! Vous recevrez vos points et récompenses en direct.',
                 icon: '/icons/icon-192.png',
                 badge: '/icons/icon-192.png',
@@ -240,7 +240,7 @@ export default function OneSignalProvider({ children }: { children?: React.React
         if ('serviceWorker' in navigator && Notification.permission === 'granted') {
           const reg = await navigator.serviceWorker.ready
           if (reg && reg.showNotification) {
-            await reg.showNotification('LOYNIVA — Test réussi ! 🔔', {
+            await reg.showNotification('Fidelity — Test réussi ! 🔔', {
               body: 'Vos notifications push mobiles fonctionnent parfaitement.',
               icon: '/icons/icon-192.png',
               badge: '/icons/icon-192.png',

@@ -192,7 +192,7 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
                       <p className="truncate font-display text-sm font-bold text-foreground">
                         {client.name}
                       </p>
-                      <p className="text-[11px] font-medium text-accent">Membre LOYNIVA</p>
+                      <p className="text-[11px] font-medium text-accent">Membre Fidelity</p>
                     </div>
                   </div>
 
@@ -329,7 +329,7 @@ export default function ClientLandingNavbar({ client }: ClientLandingNavbarProps
               )}
 
               <p className="text-[11px] text-center text-text-muted">
-                LOYNIVA — Chaque visite compte.
+                Fidelity — Chaque visite compte.
               </p>
             </div>
           </aside>

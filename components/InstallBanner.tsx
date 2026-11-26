@@ -33,7 +33,7 @@ export default function InstallBanner() {
           </div>
           <div className="min-w-0">
             <p className="font-display text-xs sm:text-sm font-bold text-foreground">
-              Ajoutez LOYNIVA sur votre écran
+              Ajoutez Fidelity sur votre écran
             </p>
             <p className="text-[11px] text-text-muted truncate">
               Vos cartes accessibles en 1 tap en caisse

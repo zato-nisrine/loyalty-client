@@ -29,7 +29,7 @@ export default function LoynivaLogo({
           background: 'linear-gradient(135deg, #102A43 0%, #1A3E61 60%, #4F9DCE 100%)',
         }}
       >
-        {/* Monogram LOYNIVA icon: dynamic nodes connecting */}
+        {/* Monogram FIDELITY icon: modern F with connected node */}
         <svg
           className="h-3/5 w-3/5 text-white"
           viewBox="0 0 24 24"
@@ -39,9 +39,10 @@ export default function LoynivaLogo({
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M6 4v16h12" />
-          <circle cx="18" cy="12" r="3" fill="#4F9DCE" stroke="#FFFFFF" strokeWidth="1.5" />
-          <path d="M6 12h9" stroke="#4F9DCE" strokeWidth="2" strokeDasharray="2 2" />
+          <path d="M6 4v16" />
+          <path d="M6 4h12" />
+          <circle cx="18" cy="4" r="2.5" fill="#4F9DCE" stroke="#FFFFFF" strokeWidth="1.5" />
+          <path d="M6 11h8" stroke="#4F9DCE" strokeWidth="2.2" />
         </svg>
       </div>
 
@@ -51,7 +52,7 @@ export default function LoynivaLogo({
             inverted ? 'text-white' : 'text-[#102A43] dark:text-[#F5F8FC]'
           }`}
         >
-          LOY<span className="text-[#4F9DCE]">NIVA</span>
+          Fidel<span className="text-[#4F9DCE]">ity</span>
         </span>
         {showTagline && (
           <span
@@ -66,3 +67,5 @@ export default function LoynivaLogo({
     </div>
   )
 }
+
+export const FidelityLogo = LoynivaLogo

@@ -328,7 +328,7 @@ export default function ClientNavbar({
               </button>
 
               <p className="text-[11px] text-center text-text-muted">
-                LOYNIVA — Chaque visite compte.
+                Fidelity — Chaque visite compte.
               </p>
             </div>
           </aside>

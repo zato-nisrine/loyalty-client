@@ -53,7 +53,7 @@ export default function InstallerPage() {
           </div>
 
           <h1 className="mt-5 font-display text-2xl font-black tracking-tight sm:text-3xl text-foreground">
-            Installez LOYNIVA sur votre écran
+            Installez Fidelity sur votre écran
           </h1>
           <p className="mx-auto mt-2.5 max-w-lg text-sm text-text-muted leading-relaxed">
             Profitez de votre porte-cartes fidélité instantanément, sans téléchargement lourd depuis l'App Store ou Google Play.
@@ -192,7 +192,7 @@ export default function InstallerPage() {
                     1
                   </div>
                   <div className="space-y-1">
-                    <p className="text-sm font-bold text-foreground">Ouvrez LOYNIVA dans Safari</p>
+                    <p className="text-sm font-bold text-foreground">Ouvrez Fidelity dans Safari</p>
                     <p className="text-xs text-text-muted">
                       Touchez l'icône de <strong>Partage</strong> située au centre de la barre inférieure de Safari (ou en haut sur iPad).
                     </p>
@@ -234,7 +234,7 @@ export default function InstallerPage() {
                   <div className="space-y-1">
                     <p className="text-sm font-bold text-foreground">Appuyez sur « Ajouter »</p>
                     <p className="text-xs text-text-muted">
-                      Le bouton se trouve dans le coin supérieur droit. L'icône LOYNIVA est maintenant installée sur votre écran d'accueil avec vos autres applications !
+                      Le bouton se trouve dans le coin supérieur droit. L'icône Fidelity est maintenant installée sur votre écran d'accueil avec vos autres applications !
                     </p>
                   </div>
                 </div>
@@ -340,7 +340,7 @@ export default function InstallerPage() {
 
       {/* Footer */}
       <footer className="border-t border-border-subtle py-6 text-center text-xs text-text-muted">
-        <p>© {new Date().getFullYear()} LOYNIVA. Chaque visite compte.</p>
+        <p>© {new Date().getFullYear()} Fidelity. Chaque visite compte.</p>
       </footer>
     </div>
   )

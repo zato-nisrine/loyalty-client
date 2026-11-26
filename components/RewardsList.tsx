@@ -47,7 +47,7 @@ export default function RewardsList({
         const reg = await navigator.serviceWorker.ready
         if (reg && reg.showNotification) {
           const rule = rules.find((r) => r.id === ruleId)
-          await reg.showNotification('LOYNIVA — Demande envoyée ! 🎁', {
+          await reg.showNotification('Fidelity — Demande envoyée ! 🎁', {
             body: `Votre demande pour "${rule?.name || 'Récompense'}" a bien été transmise au commerçant.`,
             icon: '/icons/icon-192.png',
             badge: '/icons/icon-192.png',

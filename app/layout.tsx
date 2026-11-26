@@ -8,13 +8,13 @@ import { InstallPwaProvider } from "@/components/InstallPwaContext";
 import InstallModal from "@/components/InstallModal";
 
 export const metadata: Metadata = {
-  title: "LOYNIVA — Mes cartes de fidélité",
+  title: "Fidelity — Mes cartes de fidélité",
   description: "Vos cartes de fidélité, vos points et vos récompenses. Chaque visite compte.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "LOYNIVA",
+    title: "Fidelity",
   },
   icons: {
     icon: [

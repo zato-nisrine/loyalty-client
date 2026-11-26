@@ -55,7 +55,7 @@ export default function InstallModal() {
             </div>
             <div>
               <h3 className="font-display text-lg font-bold text-foreground">
-                Ajouter LOYNIVA sur votre écran
+                Ajouter Fidelity sur votre écran
               </h3>
               <p className="text-xs text-text-muted">
                 Accès instantané, sans passer par les stores
@@ -194,7 +194,7 @@ export default function InstallModal() {
                 <div className="flex-1 text-xs leading-relaxed text-text-main">
                   <p className="font-semibold text-foreground">Touchez « Ajouter »</p>
                   <p className="mt-0.5 text-text-muted">
-                    En haut à droite de l'écran. L'icône LOYNIVA apparaîtra sur votre écran d'accueil !
+                    En haut à droite de l'écran. L'icône Fidelity apparaîtra sur votre écran d'accueil !
                   </p>
                 </div>
               </div>

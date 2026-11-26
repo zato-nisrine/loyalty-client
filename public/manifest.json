@@ -1,6 +1,6 @@
 {
-  "name": "LOYNIVA — Mes cartes de fidélité",
-  "short_name": "LOYNIVA",
+  "name": "Fidelity — Mes cartes de fidélité",
+  "short_name": "Fidelity",
   "description": "Vos cartes de fidélité, vos points et vos récompenses. Chaque visite compte.",
   "id": "/",
   "start_url": "/cards",
